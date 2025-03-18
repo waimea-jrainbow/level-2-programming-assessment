@@ -17,6 +17,13 @@
  * - healing
  * - health bars
  * - weapons minimum: sword, bow, axe, spear
+ * - gain a buff on loss in order to "balance" the players skill
+ *
+ * -- list manipulation
+ * -buffs
+ *  - collect new items
+ *  - unlock new attacks
+ *  - gain more health
  * =====================================================================
  */
 
