@@ -30,21 +30,18 @@
 
 
 fun main() {
+
+
+
     //intro
     println("--Welcome to Battle of the century--")
     println("--This is a game for 2 players--")
     //rules
-    println("These are the rules:")
-    println("")
+    rules(getChar("Would you like to read the rules [Y]es or [N]o ","yn"))
     //player 1 setup
-
-        // name
-
-        //class choice
-            //list classes
-
-        //weapon choice
-
+    println()
+    println("Lets set up player 1")
+    setupPlayer()
     //player 2 setup
 
     // name
@@ -56,15 +53,25 @@ fun main() {
 
 }
 
-fun setupPlayer{
-
+fun setupPlayer(){
+    getPlayerName()
+    chooseClass()
 }
 
-fun getplayerName{
-
+fun getPlayerName(): String{
+    println("Please enter your characters name:")
+    val name = readln()
+    return name
 }
 
-fun chooseClass{
+fun chooseClass(){
+    val classes = mutableListOf("Fighter","Archer", "Hoplite", "Barbarian")
+
+    println("Next please choose a class")
+    val userinput = getString("enter the first letter of class to read its description. Type the classes' name to select it")
+    if (userinput == ("Hoplite","Barbarian") ){
+        return userinput
+    }
 
 }
 
@@ -113,10 +120,35 @@ fun getInt(prompt: String): Int {
 
 }
 
-fun getChar(prompt: String): Char {
+/**
+ * Function to get an char from the user
+ *
+ * parameters:
+ * prompt:
+ * -text to show user
+ * check:
+ * -char/s that is being check for
+ * returns:
+ * -char that the user has entered
+ */
+fun getChar(prompt: String, check: String): Char {
     while (true) {
-        val userinput = getString(prompt).first()
-        if ("".contains(userinput)) return userinput
+        val userinput = getString(prompt).lowercase().first()
+        if (check.contains(userinput)) return userinput
+        else
         println("Please enter a valid  (e.g. )")
+    }
+}
+
+fun rules(userinput: Char){
+    if (userinput == 'y' ) {
+        println("These are the rules:")
+        println("At the start of the battle each player will pick a class.")
+        println("These classes decide the weapons, health and abilities that you will have access to in the battle.")
+        println("Once classes have been selected the battle will begin and each player will take turns making a move against their opponent")
+        println("these moves include: attacking, healing, moving or using a special class ability ")
+    }
+    else if (userinput== 'n') {
+        println("Skipping rules...")
     }
 }
