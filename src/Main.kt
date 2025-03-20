@@ -64,15 +64,23 @@ fun getPlayerName(): String{
     return name
 }
 
-fun chooseClass(){
+fun chooseClass(): String {
     val classes = mutableListOf("Fighter","Archer", "Hoplite", "Barbarian")
 
     println("Next please choose a class")
     val userinput = getString("enter the first letter of class to read its description. Type the classes' name to select it")
-    if (userinput == ("Hoplite","Barbarian") ){
-        return userinput
-    }
+    when (userinput) {
+        "Fighter" -> return userinput + 1
+        "Archer" -> return userinput + 1
+        "Hoplite" -> return userinput + 1
+        "Barbarian" -> return userinput + 1
+        "F" -> return userinput + 2
+        "A" -> return userinput + 2
+        "H" -> return userinput + 2
+        "B" -> return userinput + 2
 
+    }
+    return "Error"
 }
 
 /**
