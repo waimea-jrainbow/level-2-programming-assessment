@@ -27,8 +27,11 @@
  * =====================================================================
  */
 
-
-
+const val FIGHTERDESC = "The Fighter class is a versatile, weapons-oriented warrior who excels in combat, utilizing skill, strategy, and tactics, and is known for their mastery of weapons and armor"
+const val ARCHERDESC = "The Archer class is a person specializing in ranged combat, typically using bows and arrows, known for their agility, precision, and ability to deal damage from a distance."
+const val HOPLITEDESC = "The Hoplite is a heavily armored soldier, often wielding a spear and shield, known for their strength and discipline in the phalanx formation."
+const val BARBARIANDESC = "a primal warrior class focused on melee combat, using raw strength and fury to excel in battle. They often wield weapons such as axes and Greatswords"
+const val ERROR = "Please enter a valid input."
 fun main() {
 
 
@@ -41,7 +44,10 @@ fun main() {
     //player 1 setup
     println()
     println("Lets set up player 1")
-    setupPlayer()
+    val p1name = getPlayerName(1)
+    val p1class = chooseClass(1)
+
+    println(p1class + p1name)
     //player 2 setup
 
     // name
@@ -53,34 +59,35 @@ fun main() {
 
 }
 
-fun setupPlayer(){
-    getPlayerName()
-    chooseClass()
-}
 
-fun getPlayerName(): String{
+fun getPlayerName(player: Int): String{
     println("Please enter your characters name:")
     val name = readln()
     return name
 }
 
-fun chooseClass(): String {
+fun descClass() {
+    println("Would you like to read the class descriptions?")
+    val userinput = getChar("[Y]es or [N]o", "yn")
+}
+
+fun chooseClass(player: Int): String {
     val classes = mutableListOf("Fighter","Archer", "Hoplite", "Barbarian")
 
     println("Next please choose a class")
-    val userinput = getString("enter the first letter of class to read its description. Type the classes' name to select it")
-    when (userinput) {
-        "Fighter" -> return userinput + 1
-        "Archer" -> return userinput + 1
-        "Hoplite" -> return userinput + 1
-        "Barbarian" -> return userinput + 1
-        "F" -> return userinput + 2
-        "A" -> return userinput + 2
-        "H" -> return userinput + 2
-        "B" -> return userinput + 2
-
+    val userinput = getString("Type the classes' name to select it ")
+    when (userinput.lowercase()) {
+        "fighter" -> return userinput
+        "archer" -> return userinput
+        "hoplite" -> return userinput
+        "barbarian" -> return userinput
+        "f" -> println(FIGHTERDESC)
+        "a" -> println(ARCHERDESC)
+        "h" -> println(HOPLITEDESC)
+        "b" -> println(BARBARIANDESC)
+        else -> println(ERROR)
     }
-    return "Error"
+    return "error"
 }
 
 /**
