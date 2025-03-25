@@ -26,52 +26,92 @@
  *  - gain more health
  * =====================================================================
  */
-
-const val FIGHTERDESC = "The Fighter class is a versatile, weapons-oriented warrior who excels in combat, utilizing skill, strategy, and tactics, and is known for their mastery of weapons and armor"
+//utility
+const val ERROR = "Please enter a valid input."
+//weapon stats (damage, range, health)
+val FIGHTERSTATS = mutableListOf<Int>(8,2,20)
+val ARCHERSTATS = mutableListOf<Int>(6,6,10)
+val HOPLITESTATS = mutableListOf<Int>(5,3,25)
+val BARBARIANSTATS = mutableListOf<Int>(10,1,30)
+//class descriptions
+const val FIGHTERDESC = "The Fighter class is a versatile, weapons-oriented warrior who excels in combat, utilizing skill, strategy, and tactics. The fighter uses a Broadsword that deals 8 damage and has a range of 1m "
 const val ARCHERDESC = "The Archer class is a person specializing in ranged combat, typically using bows and arrows, known for their agility, precision, and ability to deal damage from a distance."
 const val HOPLITEDESC = "The Hoplite is a heavily armored soldier, often wielding a spear and shield, known for their strength and discipline in the phalanx formation."
 const val BARBARIANDESC = "a primal warrior class focused on melee combat, using raw strength and fury to excel in battle. They often wield weapons such as axes and Greatswords"
-const val ERROR = "Please enter a valid input."
+
+
 fun main() {
-
-
 
     //intro
     println("--Welcome to Battle of the century--")
     println("--This is a game for 2 players--")
+
     //rules
     rules(getChar("Would you like to read the rules [Y]es or [N]o ","yn"))
+
     //player 1 setup
-    println()
-    println("Lets set up player 1")
-    val p1name = getPlayerName(1)
-    val p1class = chooseClass(1)
+        println()
+        println("Lets set up player 1")
+        //Get name
+        val p1name = getPlayerName()
+        //ask if player wants to read class descriptions if no then pass
+        descClass()
+        //Get class
+        val p1class = chooseClass()
+        //list all parts of player one's data
+        println("Player one -----------")
+        println("Name: $p1name")
+        println("Class: $p1class")
 
-    println(p1class + p1name)
     //player 2 setup
+        println()
+        println("Lets set up player 2")
+        //Get name
+        val p2name = getPlayerName()
+        //ask if player wants to read class descriptions if no then pass
+        descClass()
+        //Get class
+        val p2class = chooseClass()
+        //list all parts of player one's data
+        println("Player two -----------")
+        println("Name: $p2name")
+        println("Class: $p2class")
 
-    // name
+    //begin the battle
 
-    //class choice
-        //list classes
-
-    //weapon choice
 
 }
 
 
-fun getPlayerName(player: Int): String{
+
+
+
+
+
+fun getPlayerName(): String{
     println("Please enter your characters name:")
     val name = readln()
     return name
 }
 
 fun descClass() {
-    println("Would you like to read the class descriptions?")
-    val userinput = getChar("[Y]es or [N]o", "yn")
+    println("Would you like to read the class descriptions? ")
+    var userinput = getChar("[Y]es or [N]o ", "yn")
+    if (userinput == 'y'){
+        while (true){
+        userinput = getChar("Please enter the first letter of the class you want to learn [F]ighter, [A]rcher, [B]arbarian, [H]oplite enter [X] to exit ", "fahbx")
+            when (userinput) {
+                'f' -> {println(FIGHTERDESC); println(); continue}
+                'a' -> {println(ARCHERDESC); println(); continue}
+                'b' -> {println(BARBARIANDESC); println(); continue}
+                'h' -> {println(HOPLITEDESC); println(); continue}
+                'x' -> break
+            }
+        }
+    }
 }
 
-fun chooseClass(player: Int): String {
+fun chooseClass(): String {
     val classes = mutableListOf("Fighter","Archer", "Hoplite", "Barbarian")
 
     println("Next please choose a class")
@@ -81,10 +121,6 @@ fun chooseClass(player: Int): String {
         "archer" -> return userinput
         "hoplite" -> return userinput
         "barbarian" -> return userinput
-        "f" -> println(FIGHTERDESC)
-        "a" -> println(ARCHERDESC)
-        "h" -> println(HOPLITEDESC)
-        "b" -> println(BARBARIANDESC)
         else -> println(ERROR)
     }
     return "error"
@@ -151,7 +187,7 @@ fun getChar(prompt: String, check: String): Char {
         val userinput = getString(prompt).lowercase().first()
         if (check.contains(userinput)) return userinput
         else
-        println("Please enter a valid  (e.g. )")
+        println("$ERROR (e.g.$check )")
     }
 }
 
