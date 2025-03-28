@@ -33,7 +33,7 @@ const val ERROR = "Please enter a valid input."
 //misc
 val CLASSES = mutableListOf("Hoplite","Barbarian","Archer","Fighter")
 //weapon stats (name, damage, range, health)
-val FIGHTER = mutableListOf(8,2,20)
+val FIGHTER = mutableListOf<Int>(8,2,20)
 val ARCHER = mutableListOf(6,6,10)
 val HOPLITE = mutableListOf(5,3,25)
 val BARBARIAN = mutableListOf(10,1,30)
@@ -82,7 +82,7 @@ fun main() {
         //list all parts of player one's data
         println("Player two -----------")
         println("Name: $p2name")
-        println("Class: ${p2class[0]}")
+        println("Class:" + p2class[0])
 
     //begin the battle
     println("LET THE BATTLE BEGIN:")
@@ -130,7 +130,7 @@ fun descClass() {
  * the string the user entered if it is a class in the CLASSES list
  */
 fun chooseClass(): Any {
-
+    println()
     println("Next please choose a class")
     println("The classes are:")
     for (i in CLASSES) {
@@ -139,10 +139,10 @@ fun chooseClass(): Any {
     while (true) {
         val userinput = getString("Type the classes' name to select it ")
         when (userinput.lowercase()) {
-            "fighter" -> return FIGHTER
-            "archer" -> return ARCHER
-            "hoplite" -> return HOPLITE
-            "barbarian" -> return BARBARIAN
+            "fighter" -> return "Fighter"
+            "archer" -> return "Archer"
+            "hoplite" -> return "Hoplite"
+            "barbarian" -> return "Barbarian"
             else -> println(ERROR)
         }
     }
