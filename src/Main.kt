@@ -31,12 +31,12 @@ import java.util.*
 //utility
 const val ERROR = "Please enter a valid input."
 //misc
-val CLASSES = mutableListOf<String>("Hoplite","Barbarian","Archer","Fighter")
-//weapon stats (damage, range, health)
-val FIGHTERSTATS = mutableListOf<Int>(8,2,20)
-val ARCHERSTATS = mutableListOf<Int>(6,6,10)
-val HOPLITESTATS = mutableListOf<Int>(5,3,25)
-val BARBARIANSTATS = mutableListOf<Int>(10,1,30)
+val CLASSES = mutableListOf("Hoplite","Barbarian","Archer","Fighter")
+//weapon stats (name, damage, range, health)
+val FIGHTER = mutableListOf(8,2,20)
+val ARCHER = mutableListOf(6,6,10)
+val HOPLITE = mutableListOf(5,3,25)
+val BARBARIAN = mutableListOf(10,1,30)
 //class descriptions
 const val FIGHTERDESC = "The Fighter class is a versatile, weapons-oriented warrior who excels in combat, utilizing skill, strategy, and tactics. The fighter uses a Broadsword that deals 8 damage and has a range of 1m "
 const val ARCHERDESC = "The Archer class is a person specializing in ranged combat. The archer uses a bow that deals 6 damage and has a range of 6m."
@@ -76,16 +76,17 @@ fun main() {
         //ask if player wants to read class descriptions if no then pass
         descClass()
         //Get class
-        val p2class = chooseClass()
+        val p2class = mutableListOf(chooseClass())
         println()
+        println(p2class[0])
         //list all parts of player one's data
         println("Player two -----------")
         println("Name: $p2name")
-        println("Class: $p2class".replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() })
+        println("Class: ${p2class[0]}")
 
     //begin the battle
     println("LET THE BATTLE BEGIN:")
-
+    
 
 }
 
@@ -128,7 +129,7 @@ fun descClass() {
  * returns:
  * the string the user entered if it is a class in the CLASSES list
  */
-fun chooseClass(): String {
+fun chooseClass(): Any {
 
     println("Next please choose a class")
     println("The classes are:")
@@ -138,10 +139,10 @@ fun chooseClass(): String {
     while (true) {
         val userinput = getString("Type the classes' name to select it ")
         when (userinput.lowercase()) {
-            "fighter" -> return userinput
-            "archer" -> return userinput
-            "hoplite" -> return userinput
-            "barbarian" -> return userinput
+            "fighter" -> return FIGHTER
+            "archer" -> return ARCHER
+            "hoplite" -> return HOPLITE
+            "barbarian" -> return BARBARIAN
             else -> println(ERROR)
         }
     }
