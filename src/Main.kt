@@ -1,3 +1,4 @@
+import jdk.jfr.Description
 import java.util.*
 
 /**
@@ -30,18 +31,43 @@ import java.util.*
  */
 //utility
 const val ERROR = "Please enter a valid input."
-//misc
-val CLASSES = mutableListOf("Hoplite","Barbarian","Archer","Fighter")
-//weapon stats (name, damage, range, health)
-val FIGHTER = mutableListOf<Int>(8,2,20)
-val ARCHER = mutableListOf(6,6,10)
-val HOPLITE = mutableListOf(5,3,25)
-val BARBARIAN = mutableListOf(10,1,30)
-//class descriptions
-const val FIGHTERDESC = "The Fighter class is a versatile, weapons-oriented warrior who excels in combat, utilizing skill, strategy, and tactics. The fighter uses a Broadsword that deals 8 damage and has a range of 1m "
-const val ARCHERDESC = "The Archer class is a person specializing in ranged combat. The archer uses a bow that deals 6 damage and has a range of 6m."
-const val HOPLITEDESC = "The Hoplite is a heavily armored soldier. The hoplite uses a spear to attack dealing 5 damage at a range of  and also uses a shield which increases its health."
-const val BARBARIANDESC = "a primal warrior class focused on melee combat, using raw strength and fury to excel in battle. They often wield weapons such as axes and Greatswords"
+
+//class stats (name,description, damage, range, health)
+val FIGHTER = listOf(
+    "Fighter",
+    "The Fighter class is a versatile, weapons-oriented warrior who excels in combat, utilizing skill, strategy, and tactics. The fighter uses a Broadsword that deals 8 damage and has a range of 1m \"",
+    8,
+    2,
+    20
+)
+val ARCHER = listOf(
+    "Archer",
+    "The Archer class is a person specializing in ranged combat. The archer uses a bow that deals 6 damage and has a range of 6m.",
+    6,
+    6,
+    10)
+val HOPLITE = listOf(
+    "Hoplite",
+    "The Hoplite is a heavily armored soldier. The hoplite uses a spear to attack dealing 5 damage at a range of  and also uses a shield which increases its health.",
+    5,
+    3,
+    25)
+val BARBARIAN = listOf(
+    "Barbarian",
+    "a primal warrior class focused on melee combat, using raw strength and fury to excel in battle. The Barbarian wields an axe",
+    10,
+    1,
+    30)
+
+//class indexes
+const val NAME = 0
+const val DESCRIPTION = 1
+const val DAMAGE = 2
+const val RANGE = 3
+const val HEALTH = 4
+
+//Classes
+val CLASSES = listOf(FIGHTER,HOPLITE,ARCHER,BARBARIAN)
 
 
 fun main() {
@@ -51,13 +77,13 @@ fun main() {
     println("--This is a game for 2 players--")
 
     //rules
-    rules(getChar("Would you like to read the rules [Y]es or [N]o ","yn"))
+    rules(getChar("Would you like to read the rules [Y]es or [N]o? ","yn"))
 
     //player 1 setup
         println()
         println("Lets set up player 1")
         //Get name
-        val p1name = getString("Please enter your characters name:")
+        val p1name = getString("Please enter your characters name: ")
         //ask if player wants to read class descriptions if no then pass
         descClass()
         //Get class
@@ -66,23 +92,22 @@ fun main() {
         //list all parts of player one's data
         println("Player one -----------")
         println("Name: $p1name")
-        println("Class: $p1class")
+        println("Class: ${p1class[NAME]}")
 
     //player 2 setup
         println()
         println("Lets set up player 2")
         //Get name
-        val p2name = getString("Please enter your characters name:")
+        val p2name = getString("Please enter your characters name: ")
         //ask if player wants to read class descriptions if no then pass
         descClass()
         //Get class
-        val p2class = mutableListOf(chooseClass())
+        val p2class = chooseClass()
         println()
-        println(p2class[0])
         //list all parts of player one's data
         println("Player two -----------")
         println("Name: $p2name")
-        println("Class:" + p2class[0])
+        println("Class: ${p2class[NAME]}")
 
     //begin the battle
     println("LET THE BATTLE BEGIN:")
@@ -104,17 +129,17 @@ fun descClass() {
         println()
         //list classes
         println("The classes are:")
-        for (i in CLASSES) {
-            println(i)
+        for (playerClass in CLASSES) {
+            println(playerClass[NAME])
         }
         //get user input on the class they want to learn about and print its description
         while (true){
         userinput = getChar("Please enter the first letter of the class you want to learn about. Enter [X] to exit ", "fahbx")
             when (userinput) {
-                'f' -> {println(FIGHTERDESC); println(); continue}
-                'a' -> {println(ARCHERDESC); println(); continue}
-                'b' -> {println(BARBARIANDESC); println(); continue}
-                'h' -> {println(HOPLITEDESC); println(); continue}
+                'f' -> {println(FIGHTER[DESCRIPTION]); println(); continue}
+                'a' -> {println(ARCHER[DESCRIPTION]); println(); continue}
+                'b' -> {println(BARBARIAN[DESCRIPTION]); println(); continue}
+                'h' -> {println(HOPLITE[DESCRIPTION]); println(); continue}
                 'x' -> break
             }
         }
@@ -129,20 +154,21 @@ fun descClass() {
  * returns:
  * the string the user entered if it is a class in the CLASSES list
  */
-fun chooseClass(): Any {
+fun chooseClass(): List<Any> {
     println()
     println("Next please choose a class")
     println("The classes are:")
-    for (i in CLASSES) {
-        println(i)
+    for (playerClass in CLASSES) {
+
+        println(CLASSES)
     }
     while (true) {
         val userinput = getString("Type the classes' name to select it ")
         when (userinput.lowercase()) {
-            "fighter" -> return "Fighter"
-            "archer" -> return "Archer"
-            "hoplite" -> return "Hoplite"
-            "barbarian" -> return "Barbarian"
+            "fighter" -> return FIGHTER
+            "archer" -> return ARCHER
+            "hoplite" -> return HOPLITE
+            "barbarian" -> return BARBARIAN
             else -> println(ERROR)
         }
     }
