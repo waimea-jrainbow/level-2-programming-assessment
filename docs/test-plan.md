@@ -10,17 +10,18 @@ Terminology:
 
 ---
 
-## Example Test Name
+## Rules preference entry
 
-Example test description. Example test description. Example test description. Example test description. Example test description. Example test description.
+the player can choose whether to read the rules or not by entering y or n
 
 ### Test Data To Use
 
-Details of test data and reasons for selection. Details of test data and reasons for selection. Details of test data and reasons for selection.
+valid = Y, N, y, n (in order to check whether the intended outcomes are reached and that it can accept both upper and lower case)
+Invalid = 1 (to make sure it refuses int inputs), lorem (to make sure it refuses string inputs), g (to make sure it refuses chars other than y and n), a blank input to check that it refuses them
 
 ### Expected Test Result
 
-Statement detailing what should happen. Statement detailing what should happen. Statement detailing what should happen. Statement detailing what should happen. 
+when Y or y is entered the player will be shown the rules. If N or n is entered the program will move onto the next section. if anything else is entered the program will ask the user to try again with a valid entry.
 
 ---
 

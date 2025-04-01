@@ -10,11 +10,11 @@ The development log captures key moments in your application development:
 
 ---
 
-## Date: xx/xx/20xx
+## Date: 01/04/2025
 
-Example description and notes. Example description and notes. Example description and notes. Example description and notes. Example description and notes. Example description and notes.
+Changed const variable class stats to be inside another list of classes and made a list of indexes to call within the code which allows for more readable functions 
 
-![example.png](screenshots/example.png)
+![constChanges.png](screenshots/constChanges.png)
 
 ---
 

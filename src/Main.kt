@@ -1,5 +1,7 @@
 import jdk.jfr.Description
+import jdk.jfr.Name
 import java.util.*
+
 
 /**
  * =====================================================================
@@ -31,7 +33,9 @@ import java.util.*
  */
 //utility
 const val ERROR = "Please enter a valid input."
-
+const val DIVIDER = "-----------------------------------------------------------------------"
+const val DEFAULT_DISTANCE = 4
+val STARTER = ((1..2).random())
 //class stats (name,description, damage, range, health)
 val FIGHTER = listOf(
     "Fighter",
@@ -77,44 +81,91 @@ fun main() {
     println("--This is a game for 2 players--")
 
     //rules
-    rules(getChar("Would you like to read the rules [Y]es or [N]o? ","yn"))
+    rules(getChar("Would you like to read the rules [Y]es or [N]o? ", "yn"))
 
     //player 1 setup
-        println()
-        println("Lets set up player 1")
-        //Get name
-        val p1name = getString("Please enter your characters name: ")
-        //ask if player wants to read class descriptions if no then pass
-        descClass()
-        //Get class
-        val p1class = chooseClass()
-        println()
-        //list all parts of player one's data
-        println("Player one -----------")
-        println("Name: $p1name")
-        println("Class: ${p1class[NAME]}")
-
+    println()
+    println("Lets set up player 1")
+    //Get name
+    val p1name = getString("Please enter your characters name: ")
+    //ask if player wants to read class descriptions if no then pass
+    descClass()
+    //Get class
+    val p1class = chooseClass()
+    println()
+    //list all parts of player one's data
+    println("Player one -----------")
+    println("Name: $p1name")
+    println("Class: ${p1class[NAME]}")
+    var p1health = p1class[HEALTH]
     //player 2 setup
-        println()
-        println("Lets set up player 2")
-        //Get name
-        val p2name = getString("Please enter your characters name: ")
-        //ask if player wants to read class descriptions if no then pass
-        descClass()
-        //Get class
-        val p2class = chooseClass()
-        println()
-        //list all parts of player one's data
-        println("Player two -----------")
-        println("Name: $p2name")
-        println("Class: ${p2class[NAME]}")
-
+    println()
+    println("Lets set up player 2")
+    //Get name
+    val p2name = getString("Please enter your characters name: ")
+    //ask if player wants to read class descriptions if no then pass
+    descClass()
+    //Get class
+    val p2class = chooseClass()
+    println()
+    //list all parts of player one's data
+    println("Player two -----------")
+    println("Name: $p2name")
+    println("Class: ${p2class[NAME]}")
+    var p2health = p2class[HEALTH]
     //begin the battle
     println("LET THE BATTLE BEGIN:")
-    
-
+    //set default distance between players for the start of the battle
+    var distance = DEFAULT_DISTANCE
+    //setup variable in order to check whose turn it is
+    var currentP = 0
+    when (STARTER) {
+        1 -> {
+            println("$p1name goes first!")
+            currentP = 1
+        }
+        2 -> {
+            println("$p2name goes first!")
+            currentP = 2
+        }
+    }
+    println("The field of battle")
+    println()
+    battlefield(distance, p1name, p2name)
+    println(DIVIDER)
+    playerAction(currentP,p1health as Int, p2health as Int)
+    when (currentP){
+        1 -> currentP = 2
+        2 -> currentP = 1
+    }
 }
 
+
+/**
+ * Function for the user to choose what action they take on their turn
+ *
+ * parameters
+ * currentP: the player whos turn it is currently
+ * p1health: player one's remaining hitpoints
+ * p2health: player two's remaining hitpoints
+ * returns:
+ * the string the user entered if it is a class in the CLASSES list
+ */
+fun playerAction(currentP:Int, p1health:Int, p2health:Int) {
+    while (p1health > 0 || p2health > 0) {
+        val userinput = getChar("Player $currentP please choose an action: ", "amh")
+        println(DIVIDER)
+        println("ATTACK [A]")
+        println("MOVE [M]")
+        println("HEAL [H]")
+        when (userinput) {
+            'a' -> attack()
+            'm' -> move()
+            'h' -> heal()
+        }
+
+    }
+}
 
 
 /**
@@ -158,9 +209,8 @@ fun chooseClass(): List<Any> {
     println()
     println("Next please choose a class")
     println("The classes are:")
-    for (playerClass in CLASSES) {
-
-        println(CLASSES)
+    for (classInfo in CLASSES) {
+        println(classInfo[NAME])
     }
     while (true) {
         val userinput = getString("Type the classes' name to select it ")
@@ -174,6 +224,28 @@ fun chooseClass(): List<Any> {
     }
 
 }
+
+fun battlefield(distance:Int,p1name:String, p2Name:String){
+    print(p1name)
+    for (steps in 1..distance)print("_")
+    print(p2Name)
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /**
  * Function to get a string from the user
@@ -235,6 +307,7 @@ fun getChar(prompt: String, check: String): Char {
     while (true) {
         val userinput = getString(prompt).lowercase().first()
         if (check.contains(userinput)) return userinput
+        else println(ERROR)
 
     }
 }
