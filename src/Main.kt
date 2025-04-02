@@ -158,14 +158,23 @@ fun playerAction(currentP:Int, p1health:Int, p2health:Int) {
         println("ATTACK [A]")
         println("MOVE [M]")
         println("HEAL [H]")
-//        when (userinput) {
-//            'a' -> attack()
-//            'm' -> move()
-//            'h' -> heal()
-//        }
+        when (userinput) {
+            'a' -> attack(currentP, p1health, p2health)
+            'm' -> move()
+            'h' -> heal()
+        }
 
     }
 }
+
+fun attack(currentP:Int, p1health:Int, p2health:Int ){
+    
+}
+
+
+
+
+
 
 
 /**
