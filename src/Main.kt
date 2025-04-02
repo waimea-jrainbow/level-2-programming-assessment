@@ -158,11 +158,11 @@ fun playerAction(currentP:Int, p1health:Int, p2health:Int) {
         println("ATTACK [A]")
         println("MOVE [M]")
         println("HEAL [H]")
-        when (userinput) {
-            'a' -> attack()
-            'm' -> move()
-            'h' -> heal()
-        }
+//        when (userinput) {
+//            'a' -> attack()
+//            'm' -> move()
+//            'h' -> heal()
+//        }
 
     }
 }
@@ -227,7 +227,7 @@ fun chooseClass(): List<Any> {
 
 fun battlefield(distance:Int,p1name:String, p2Name:String){
     print(p1name)
-    for (steps in 1..distance)print("_")
+    for (steps in 1..distance)println("_")
     print(p2Name)
 }
 
