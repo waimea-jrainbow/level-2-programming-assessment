@@ -34,31 +34,31 @@ import java.util.*
 //utility
 const val ERROR = "Please enter a valid input."
 const val DIVIDER = "-----------------------------------------------------------------------"
-const val DEFAULT_DISTANCE = 4
-val STARTER = ((1..2).random())
+const val DEFAULT_DISTANCE = 1
+val STARTER = ((0..1).random())
 //class stats (name,description, damage, range, health)
 val FIGHTER = listOf(
     "Fighter",
-    "The Fighter class is a versatile, weapons-oriented warrior who excels in combat, utilizing skill, strategy, and tactics. The fighter uses a Broadsword that deals 8 damage and has a range of 1m \"",
+    "The Fighter class is a versatile, weapons-oriented warrior who excels in combat, utilizing skill, strategy, and tactics. The fighter uses a Broadsword that deals up to 8 damage and has a range of 1m \"",
     8,
     2,
     20
 )
 val ARCHER = listOf(
     "Archer",
-    "The Archer class is a person specializing in ranged combat. The archer uses a bow that deals 6 damage and has a range of 6m.",
+    "The Archer class is a person specializing in ranged combat. The archer uses a bow that deals up to 6 damage and has a range of 6m.",
     6,
     6,
     10)
 val HOPLITE = listOf(
     "Hoplite",
-    "The Hoplite is a heavily armored soldier. The hoplite uses a spear to attack dealing 5 damage at a range of  and also uses a shield which increases its health.",
+    "The Hoplite is a heavily armored soldier. The hoplite uses a spear to attack dealing up to 5 damage at a range of  and also uses a shield which increases its health.",
     5,
     3,
     25)
 val BARBARIAN = listOf(
     "Barbarian",
-    "a primal warrior class focused on melee combat, using raw strength and fury to excel in battle. The Barbarian wields an axe",
+    "a primal warrior class focused on melee combat, using raw strength and fury to excel in battle. The Barbarian wields an axe that can deal up to 10 damage",
     10,
     1,
     30)
@@ -113,30 +113,32 @@ fun main() {
     println("Name: $p2name")
     println("Class: ${p2class[NAME]}")
     var p2health = p2class[HEALTH]
+    //final preparations
     //begin the battle
     println("LET THE BATTLE BEGIN:")
     //set default distance between players for the start of the battle
     var distance = DEFAULT_DISTANCE
     //setup variable in order to check whose turn it is
+    var playernames = listOf<String>(p1name,p2name)
     var currentP = 0
     when (STARTER) {
         1 -> {
             println("$p1name goes first!")
-            currentP = 1
+            currentP = 0
         }
         2 -> {
             println("$p2name goes first!")
-            currentP = 2
+            currentP = 1
         }
     }
-    println("The field of battle")
-    println()
-    battlefield(distance, p1name, p2name)
-    println(DIVIDER)
-    playerAction(currentP,p1health as Int, p2health as Int)
-    when (currentP){
-        1 -> currentP = 2
-        2 -> currentP = 1
+    while (p1health as Int > 0 || p2health as Int > 0) {
+        println("The field of battle")
+        println()
+        battlefield(distance, p1name, p2name)
+        println(DIVIDER)
+        playerAction(currentP, p1health as Int, p2health as Int, distance, playernames, p1class, p2class, p1name, p2name)
+        if (currentP == 0) currentP = 1
+        else currentP = 0
     }
 }
 
@@ -151,27 +153,44 @@ fun main() {
  * returns:
  * the string the user entered if it is a class in the CLASSES list
  */
-fun playerAction(currentP:Int, p1health:Int, p2health:Int) {
-    while (p1health > 0 || p2health > 0) {
-        val userinput = getChar("Player $currentP please choose an action: ", "amh")
-        println(DIVIDER)
-        println("ATTACK [A]")
-        println("MOVE [M]")
-        println("HEAL [H]")
-        when (userinput) {
-            'a' -> attack(currentP, p1health, p2health)
-            'm' -> move()
-            'h' -> heal()
+fun playerAction(currentP:Int, p1health:Int, p2health:Int, distance: Int,  playernames: List<String>, p1class: List<Any>, p2class: List<Any>, p1name: String, p2name: String) {
+    val currentPName = playernames[currentP]
+    val userinput = getChar(" $currentPName choose an action: \n$DIVIDER\n ATTACK [A] \n MOVE [M] \n HEAL [H] \n" , "amh")
+    println()
+    when (userinput) {
+        'a' -> attack(currentP, p1health, p2health, distance, p1class , p2class, p1name, p2name  )
+//        'm' -> move()
+//        'h' -> heal()
+    }
+
+
+
+
+}
+
+fun attack(currentP:Int, p1health:Int, p2health:Int, distance:Int, p1class: List<Any>, p2class: List<Any>, p1name: String, p2name: String) {
+    when (currentP) {
+        0 -> {
+            if (p1class[3] as Int <= distance) {
+                val damage = 1..p1class[3] as Int
+                println("$p1name takes a swing at $p2name")
+                println("The hit lands dealing $damage $p2name is now at ${p2class[HEALTH] as Int - damage as Int}".red())
+
+            } else println("Sorry $p1name, $p2name is too far away.")
         }
 
+        1 -> {
+            if (p2class[3] as Int <= distance) {
+                val damage = 1..p2class[3] as Int
+                println("$p2name takes a swing at $p1name")
+                println("The hit lands dealing $damage $p1name is now at ${p1class[HEALTH] as Int - damage as Int}".red())
+            } else println("Sorry $p2name, $p1name is too far away.")
+        }
+
+
     }
+
 }
-
-fun attack(currentP:Int, p1health:Int, p2health:Int ){
-    
-}
-
-
 
 
 
@@ -236,8 +255,8 @@ fun chooseClass(): List<Any> {
 
 fun battlefield(distance:Int,p1name:String, p2Name:String){
     print(p1name)
-    for (steps in 1..distance)println("_")
-    print(p2Name)
+    for (steps in 1..distance)print("_")
+    println(p2Name)
 }
 
 
