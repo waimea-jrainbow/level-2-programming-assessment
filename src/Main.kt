@@ -1,8 +1,3 @@
-import jdk.jfr.Description
-import jdk.jfr.Name
-import java.util.*
-
-
 /**
  * =====================================================================
  * Programming Project for NCEA Level 2, Standard 91896
@@ -153,12 +148,12 @@ fun main() {
  * returns:
  * the string the user entered if it is a class in the CLASSES list
  */
-fun playerAction(currentP:Int, p1health:Int, p2health:Int, distance: Int,  playernames: List<String>, p1class: List<Any>, p2class: List<Any>, p1name: String, p2name: String) {
+fun playerAction(currentP:Int, p1health:Int, p2health:Int, distance: Int, playernames: List<String>, p1class: List<Any>, p2class: List<Any>, p1name: String, p2name: String) {
     val currentPName = playernames[currentP]
     val userinput = getChar(" $currentPName choose an action: \n$DIVIDER\n ATTACK [A] \n MOVE [M] \n HEAL [H] \n" , "amh")
     println()
     when (userinput) {
-        'a' -> attack(currentP, p1health, p2health, distance, p1class , p2class, p1name, p2name  )
+        'a' -> attack(currentP, p1health, p2health, distance, p1class , p2class, p1name, p2name)
 //        'm' -> move()
 //        'h' -> heal()
     }
@@ -168,22 +163,27 @@ fun playerAction(currentP:Int, p1health:Int, p2health:Int, distance: Int,  playe
 
 }
 
-fun attack(currentP:Int, p1health:Int, p2health:Int, distance:Int, p1class: List<Any>, p2class: List<Any>, p1name: String, p2name: String) {
+fun attack(currentP:Int, p1health:Int, p2health:Int, distance:Int, p1class: List<Any>, p2class: List<Any>, p1name: String, p2name: String){
     when (currentP) {
-        0 -> {
-            if (p1class[3] as Int <= distance) {
-                val damage = 1..p1class[3] as Int
+        0 -> { //P1 attacks
+            val attackRange = p1class[3] as Int
+            if (attackRange >= distance) {
+                val damage =(1.. p1class[DAMAGE] as Int).random()
                 println("$p1name takes a swing at $p2name")
-                println("The hit lands dealing $damage $p2name is now at ${p2class[HEALTH] as Int - damage as Int}".red())
-
+                val newP2Health = (p2health - damage)
+                println("The hit lands dealing $damage damage. $p1name is now at $newP2Health health.")
+                return newP2Health
             } else println("Sorry $p1name, $p2name is too far away.")
         }
 
-        1 -> {
-            if (p2class[3] as Int <= distance) {
-                val damage = 1..p2class[3] as Int
+        1 -> { //P2 attacks
+            val attackRange = p2class[3] as Int
+            if (attackRange >= distance) {
+                val damage =(1.. p2class[DAMAGE] as Int).random()
                 println("$p2name takes a swing at $p1name")
-                println("The hit lands dealing $damage $p1name is now at ${p1class[HEALTH] as Int - damage as Int}".red())
+                val newP1Health = (p1health - damage)
+                println("The hit lands dealing $damage damage. $p1name is now at $newP1Health health.")
+                p1health = newP1Health
             } else println("Sorry $p2name, $p1name is too far away.")
         }
 
