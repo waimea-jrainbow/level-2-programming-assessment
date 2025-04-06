@@ -131,11 +131,24 @@ fun main() {
         println()
         battlefield(distance, p1name, p2name)
         println(DIVIDER)
-        playerAction(currentP, p1health as Int, p2health as Int, distance, playernames, p1class, p2class, p1name, p2name)
+        val userinput = playerAction(currentP, p1health as Int, p2health as Int, distance, playernames, p1class, p2class, p1name, p2name)
+        when (userinput) {
+            'a' -> { var damage = attack (currentP, p1health, p2health, distance, p1class , p2class, p1name, p2name)
+            if (currentP == 0){
+                p2health -= damage
+
+            }
+            else p1health -= damage
+            }
+//          'm' -> move()
+//          'h' -> heal()
+            }
+        }
+
         if (currentP == 0) currentP = 1
         else currentP = 0
     }
-}
+
 
 
 /**
@@ -148,22 +161,19 @@ fun main() {
  * returns:
  * the string the user entered if it is a class in the CLASSES list
  */
-fun playerAction(currentP:Int, p1health:Int, p2health:Int, distance: Int, playernames: List<String>, p1class: List<Any>, p2class: List<Any>, p1name: String, p2name: String) {
+fun playerAction(currentP:Int, p1health:Int, p2health:Int, distance: Int, playernames: List<String>, p1class: List<Any>, p2class: List<Any>, p1name: String, p2name: String):Char {
     val currentPName = playernames[currentP]
-    val userinput = getChar(" $currentPName choose an action: \n$DIVIDER\n ATTACK [A] \n MOVE [M] \n HEAL [H] \n" , "amh")
+    var newhealth = 0
+    val userinput = getChar(" $currentPName choose an action: \n$DIVIDER\n ATTACK [A] \n MOVE [M] \n HEAL [H] \n", "amh")
     println()
-    when (userinput) {
-        'a' -> attack(currentP, p1health, p2health, distance, p1class , p2class, p1name, p2name)
-//        'm' -> move()
-//        'h' -> heal()
-    }
-
-
-
-
+    return userinput
 }
 
-fun attack(currentP:Int, p1health:Int, p2health:Int, distance:Int, p1class: List<Any>, p2class: List<Any>, p1name: String, p2name: String){
+
+
+
+
+fun attack(currentP:Int, p1health:Int, p2health:Int, distance:Int, p1class: List<Any>, p2class: List<Any>, p1name: String, p2name: String): Int {
     when (currentP) {
         0 -> { //P1 attacks
             val attackRange = p1class[3] as Int
@@ -183,13 +193,13 @@ fun attack(currentP:Int, p1health:Int, p2health:Int, distance:Int, p1class: List
                 println("$p2name takes a swing at $p1name")
                 val newP1Health = (p1health - damage)
                 println("The hit lands dealing $damage damage. $p1name is now at $newP1Health health.")
-                p1health = newP1Health
+                return newP1Health
             } else println("Sorry $p2name, $p1name is too far away.")
         }
 
 
     }
-
+    return 
 }
 
 
