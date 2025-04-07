@@ -92,7 +92,7 @@ fun main() {
     println("Player one -----------")
     println("Name: $p1name")
     println("Class: ${p1class[NAME]}")
-    var p1health = p1class[HEALTH]
+    var p1health = p1class[HEALTH] as Int
     //player 2 setup
     println()
     println("Lets set up player 2")
@@ -107,7 +107,7 @@ fun main() {
     println("Player two -----------")
     println("Name: $p2name")
     println("Class: ${p2class[NAME]}")
-    var p2health = p2class[HEALTH]
+    var p2health = p2class[HEALTH] as Int
     //final preparations
     //begin the battle
     println("LET THE BATTLE BEGIN:")
@@ -126,7 +126,7 @@ fun main() {
             currentP = 1
         }
     }
-    while (p1health as Int > 0 || p2health as Int > 0) {
+    while (p1health > 0 && p2health > 0) {
         println("The field of battle")
         println()
         battlefield(distance, p1name, p2name)
@@ -143,10 +143,19 @@ fun main() {
 //          'm' -> move()
 //          'h' -> heal()
             }
-        }
+
 
         if (currentP == 0) currentP = 1
         else currentP = 0
+        }
+    if (p1health <= 1){
+        println()
+        println("Congratulations $p2name you have won the battle!!!!")
+    }
+    if (p2health <= 1){
+        println()
+        println("Congratulations $p1name you have won the battle!!!!")
+    }
     }
 
 
@@ -180,9 +189,8 @@ fun attack(currentP:Int, p1health:Int, p2health:Int, distance:Int, p1class: List
             if (attackRange >= distance) {
                 val damage =(1.. p1class[DAMAGE] as Int).random()
                 println("$p1name takes a swing at $p2name")
-                val newP2Health = (p2health - damage)
-                println("The hit lands dealing $damage damage. $p1name is now at $newP2Health health.")
-                return newP2Health
+                println("The hit lands dealing $damage damage. $p2name is now at ${p2health - damage} health.")
+                return damage
             } else println("Sorry $p1name, $p2name is too far away.")
         }
 
@@ -191,15 +199,14 @@ fun attack(currentP:Int, p1health:Int, p2health:Int, distance:Int, p1class: List
             if (attackRange >= distance) {
                 val damage =(1.. p2class[DAMAGE] as Int).random()
                 println("$p2name takes a swing at $p1name")
-                val newP1Health = (p1health - damage)
-                println("The hit lands dealing $damage damage. $p1name is now at $newP1Health health.")
-                return newP1Health
+                println("The hit lands dealing $damage damage. $p1name is now at ${p1health - damage} health.")
+                return damage
             } else println("Sorry $p2name, $p1name is too far away.")
         }
 
 
     }
-    return 
+    return 0
 }
 
 
