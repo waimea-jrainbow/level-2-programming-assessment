@@ -29,34 +29,41 @@
 //utility
 const val ERROR = "Please enter a valid input."
 const val DIVIDER = "-----------------------------------------------------------------------"
-const val DEFAULT_DISTANCE = 1
+const val DEFAULT_DISTANCE = 4
 val STARTER = ((0..1).random())
-//class stats (name,description, damage, range, health)
+//class stats (name,description, damage, range, health, speed)
 val FIGHTER = listOf(
     "Fighter",
     "The Fighter class is a versatile, weapons-oriented warrior who excels in combat, utilizing skill, strategy, and tactics. The fighter uses a Broadsword that deals up to 8 damage and has a range of 1m \"",
     8,
     2,
-    20
+    20,
+    4
 )
 val ARCHER = listOf(
     "Archer",
     "The Archer class is a person specializing in ranged combat. The archer uses a bow that deals up to 6 damage and has a range of 6m.",
     6,
     6,
-    10)
+    10,
+    4
+)
 val HOPLITE = listOf(
     "Hoplite",
     "The Hoplite is a heavily armored soldier. The hoplite uses a spear to attack dealing up to 5 damage at a range of  and also uses a shield which increases its health.",
     5,
     3,
-    25)
+    25,
+    3
+)
 val BARBARIAN = listOf(
     "Barbarian",
     "a primal warrior class focused on melee combat, using raw strength and fury to excel in battle. The Barbarian wields an axe that can deal up to 10 damage",
     10,
     1,
-    30)
+    30,
+    5
+)
 
 //class indexes
 const val NAME = 0
@@ -64,7 +71,7 @@ const val DESCRIPTION = 1
 const val DAMAGE = 2
 const val RANGE = 3
 const val HEALTH = 4
-
+const val SPEED = 5
 //Classes
 val CLASSES = listOf(FIGHTER,HOPLITE,ARCHER,BARBARIAN)
 
@@ -114,7 +121,7 @@ fun main() {
     //set default distance between players for the start of the battle
     var distance = DEFAULT_DISTANCE
     //setup variable in order to check whose turn it is
-    var playernames = listOf<String>(p1name,p2name)
+    val playernames = listOf(p1name,p2name)
     var currentP = 0
     when (STARTER) {
         1 -> {
@@ -140,9 +147,14 @@ fun main() {
             }
             else p1health -= damage
             }
-//          'm' -> move()
-//          'h' -> heal()
+          'm' -> distance = move(currentP, distance, p1name, p2name, p1class, p2class)
+          'h' ->  if (currentP == 0 ) {
+                p1health = heal(currentP, p1health, p2health, p1name, p2name, p1class,p2class)
+          }
+            else {
+                p2health = heal(currentP, p1health, p2health, p1name, p2name, p1class, p2class)
             }
+        }
 
 
         if (currentP == 0) currentP = 1
@@ -172,20 +184,88 @@ fun main() {
  */
 fun playerAction(currentP:Int, p1health:Int, p2health:Int, distance: Int, playernames: List<String>, p1class: List<Any>, p2class: List<Any>, p1name: String, p2name: String):Char {
     val currentPName = playernames[currentP]
-    var newhealth = 0
     val userinput = getChar(" $currentPName choose an action: \n$DIVIDER\n ATTACK [A] \n MOVE [M] \n HEAL [H] \n", "amh")
     println()
     return userinput
 }
 
 
+fun heal(currentP:Int, p1health: Int,p2health: Int, p1name: String,p2name: String, p1class: List<Any>, p2class: List<Any>): Int {
+    when (currentP) {
+        0 -> { //P1 heals
+            val heal = (1..6).random()
+
+            if (p1health + heal >= p1class[HEALTH] as Int) {
+                println("$p1name heals $heal and is now at max health which is ${p1class[HEALTH]}.")
+                return p1class[HEALTH] as Int
+            } else {
+                println("$p1name heals $heal and is now at ${p1health + heal} health.")
+                return p1health + heal
+            }
+        }
+
+
+        1 -> { //P2 heals
+            val heal = (1..6).random()
+            if (p2health + heal >= p2class[HEALTH] as Int) {
+                println("$p2name heals $heal and is now at max health which is ${p2class[HEALTH]}.")
+                return p2class[HEALTH] as Int
+            } else {
+                println("$p2name heals $heal and is now at ${p2health + heal} health.")
+                return p2health + heal
+            }
+
+
+        }
+
+    }
+    return 0
+}
+
+
+fun move(currentP: Int, distance: Int, p1name: String, p2name: String, p1class: List<Any>, p2class: List<Any>):Int {
+    val direction = getChar("Do you want to move left or right", "lr")
+    when (currentP) {
+        0 -> { //P1 attacks
+            val speed = p1class[SPEED] as Int
+            if (direction == 'l') {
+                val movement = distance + speed
+                println("$p1name moves $speed steps")
+                return movement
+            }
+            else if (direction == 'r'){
+                val movement = distance - speed
+                println("$p1name moves $speed steps")
+                return movement
+            }
+        }
+
+        1 -> { //P2 attacks
+            val speed = p2class[SPEED] as Int
+            if (direction == 'l') {
+                val movement = distance - speed
+                println("$p2name moves $speed steps")
+                return movement
+
+            }
+            else if (direction == 'r') {
+                val movement = distance + speed
+                println("$p2name moves $speed steps")
+                return movement
+            }
+        }
+
+
+    }
+    return 0
+}
 
 
 
 fun attack(currentP:Int, p1health:Int, p2health:Int, distance:Int, p1class: List<Any>, p2class: List<Any>, p1name: String, p2name: String): Int {
     when (currentP) {
         0 -> { //P1 attacks
-            val attackRange = p1class[3] as Int
+            val attackRange = p1class[RANGE] as Int
             if (attackRange >= distance) {
                 val damage =(1.. p1class[DAMAGE] as Int).random()
                 println("$p1name takes a swing at $p2name")
@@ -195,7 +275,7 @@ fun attack(currentP:Int, p1health:Int, p2health:Int, distance:Int, p1class: List
         }
 
         1 -> { //P2 attacks
-            val attackRange = p2class[3] as Int
+            val attackRange = p2class[RANGE] as Int
             if (attackRange >= distance) {
                 val damage =(1.. p2class[DAMAGE] as Int).random()
                 println("$p2name takes a swing at $p1name")
@@ -208,9 +288,6 @@ fun attack(currentP:Int, p1health:Int, p2health:Int, distance:Int, p1class: List
     }
     return 0
 }
-
-
-
 
 
 /**
@@ -277,21 +354,6 @@ fun battlefield(distance:Int,p1name:String, p2Name:String){
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /**
  * Function to get a string from the user
  *
@@ -338,7 +400,7 @@ fun getInt(prompt: String): Int {
 }
 
 /**
- * Function to get an char from the user
+ * Function to get a char from the user
  *
  * parameters:
  * prompt:
