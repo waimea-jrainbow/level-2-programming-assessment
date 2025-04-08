@@ -9,21 +9,6 @@
  * Notes:
  * Battle of the century game is a 2 player turn based fighting game which will have players choose between many actions in order
  * to defeat there opponent in combat.
- *
- *
- * TODO:
- * - class selection
- * - multiple weapons
- * - healing
- * - health bars
- * - weapons minimum: sword, bow, axe, spear
- * - gain a buff on loss in order to "balance" the players skill
- *
- * -- list manipulation
- * -buffs
- *  - collect new items
- *  - unlock new attacks
- *  - gain more health
  * =====================================================================
  */
 //utility
@@ -478,7 +463,7 @@ fun rules(userinput: Char){
         println("Once classes have been selected the battle will begin and each player will take turns making a move against their opponent")
         println("these moves include: attacking, healing, moving or using a special class ability ")
     }
-    else if (userinput== 'n') { //if the input is n then skip the rules 
+    else if (userinput== 'n') { //if the input is n then skip the rules
         println("Skipping rules...")
     }
 }
