@@ -380,9 +380,9 @@ fun descClass() {
 /**
  * Function for the user to choose a class
  *
- * parameters
+ *
  * returns:
- * the string the user entered if it is a class in the CLASSES list
+ * the class list that corelates with the entered string from the user
  */
 fun chooseClass(): List<Any> {
     println()
@@ -431,38 +431,16 @@ fun battlefield(distance:Int,p1name:String, p2Name:String){
 
 fun getString(prompt: String): String {
     var userinput: String
-
     while (true) {
         print(prompt)
-        userinput = readln()
-        if (userinput.isNotBlank()) break
+        userinput = readln() //get user input
+        if (userinput.isNotBlank()) break //check if the user input isn't blank if it isn't return it if it ask again
 
     }
     return userinput
 }
 
-/**
- * Function to get an integer from the user
- *
- * parameters:
- * prompt:
- * -text to show user
- * returns:
- * -integer that the user has entered
- */
-fun getInt(prompt: String): Int {
-    var intValue:Int?
 
-    while (true) {
-        val userinput = getString(prompt)
-        intValue = userinput.toIntOrNull()
-        if (intValue != null) break
-
-    }
-
-    return intValue!!
-
-}
 
 /**
  * Function to get a char from the user
@@ -477,15 +455,22 @@ fun getInt(prompt: String): Int {
  */
 fun getChar(prompt: String, check: String): Char {
     while (true) {
-        val userinput = getString(prompt).lowercase().first()
-        if (check.contains(userinput)) return userinput
-        else println(ERROR)
+        val userinput = getString(prompt).lowercase().first() //get string from user and take first character
+        if (check.contains(userinput)) return userinput //check the users input against the letters that are being checked for
+        else println(ERROR) //if it doesn't ask again
 
     }
 }
 
+/**
+ * Function to get user input on whether they want to read the rules
+ *
+ * parameters:
+ * userinput: entered char from the user
+ *
+ */
 fun rules(userinput: Char){
-    if (userinput == 'y' ) {
+    if (userinput == 'y' ) { //check if the user input is y if it is print the rules
         println()
         println("These are the rules:")
         println("At the start of the battle each player will pick a class.")
@@ -493,7 +478,7 @@ fun rules(userinput: Char){
         println("Once classes have been selected the battle will begin and each player will take turns making a move against their opponent")
         println("these moves include: attacking, healing, moving or using a special class ability ")
     }
-    else if (userinput== 'n') {
+    else if (userinput== 'n') { //if the input is n then skip the rules 
         println("Skipping rules...")
     }
 }
