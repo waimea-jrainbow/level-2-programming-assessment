@@ -388,26 +388,34 @@ fun chooseClass(): List<Any> {
     println()
     println("Next please choose a class")
     println("The classes are:")
-    for (classInfo in CLASSES) {
+    for (classInfo in CLASSES) {// list all classes
         println(classInfo[NAME])
     }
     while (true) {
-        val userinput = getString("Type the classes' name to select it ")
+        val userinput = getString("Type the classes' name to select it ") //get userinput on the class that the player wants
         when (userinput.lowercase()) {
-            "fighter" -> return FIGHTER
-            "archer" -> return ARCHER
-            "hoplite" -> return HOPLITE
-            "barbarian" -> return BARBARIAN
-            else -> println(ERROR)
+            "fighter" -> return FIGHTER //if fighter entered then will return fighter class stats
+            "archer" -> return ARCHER //if archer entered then will return archer class stats
+            "hoplite" -> return HOPLITE //if hoplite entered then will return hoplite class stats
+            "barbarian" -> return BARBARIAN //if barbarian entered then will return barbarian class stats
+            else -> println(ERROR) //if player doesn't enter a valid input then print error message
         }
     }
 
 }
 
+/**
+ * Function to print the names of both player seperated by an amount of underscores equal to the distance variable
+ *
+ * parameters
+ * distance: the distance between both players
+ * p1name: player 1's name
+ * p2name: player 2's name
+ */
 fun battlefield(distance:Int,p1name:String, p2Name:String){
-    print(p1name)
-    for (steps in 1..distance)print("_")
-    println(p2Name)
+    print(p1name) //print player 1's name
+    for (steps in 1..distance)print("_")//print number of underscores equal to distance between players
+    println(p2Name) //print player 2's name
 }
 
 
