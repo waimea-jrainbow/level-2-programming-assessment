@@ -13,7 +13,6 @@ The project is written in the [Kotlin](https://kotlinlang.org) programming langu
 - Using non-trivial string manipulation
 - Using additional non-core libraries
 
-** EDIT LIST ABOVE TO MATCH YOUR PROJECT**
 
 ---
 
@@ -28,7 +27,7 @@ The project is written in the [Kotlin](https://kotlinlang.org) programming langu
 ## Project Description
 
 Battle of the century game is a 2 player turn based fighting game which will have players choose between many actions in order 
-to defeat their opponent in combat. 
+to defeat their opponent in turn-based combat. 
 
 
 

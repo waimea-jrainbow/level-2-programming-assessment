@@ -20,7 +20,7 @@ val STARTER = ((0..1).random()) //decide who starts first
 //class stats (name,description, damage, range, health, speed)
 val FIGHTER = listOf(
     "Fighter",
-    "The Fighter class is a versatile, weapons-oriented warrior who excels in combat, utilizing skill, strategy, and tactics. The fighter uses a Broadsword that deals up to 8 damage and has a range of 1m \"",
+    "The Fighter class is a versatile, weapons-oriented warrior who excels in combat, utilizing skill, strategy, and tactics. The fighter uses a Broadsword that deals up to 8 damage and has a range of 1",
     8,
     2,
     20,
@@ -36,7 +36,7 @@ val ARCHER = listOf(
 )
 val HOPLITE = listOf(
     "Hoplite",
-    "The Hoplite is a heavily armored soldier. The hoplite uses a spear to attack dealing up to 5 damage at a range of  and also uses a shield which increases its health.",
+    "The Hoplite is a heavily armored soldier. The hoplite uses a spear to attack dealing up to 5 damage at a range of 3 and also uses a shield which increases its health.",
     5,
     3,
     25,
@@ -76,79 +76,94 @@ fun main() {
     println()
     println("Lets set up player 1")
     //Get name
-    val p1name = getString("Please enter your characters name: ")
+    val p1Name = getString("Please enter your characters name: ")
     //ask if player wants to read class descriptions if no then pass
     descClass()
     //Get class
-    val p1class = chooseClass()
+    val p1Class = chooseClass()
     println()
     //list all parts of player one's data
     println("Player one -----------")
-    println("Name: $p1name")
-    println("Class: ${p1class[NAME]}")
-    var p1health = p1class[HEALTH] as Int //set up player health variable
+    println("Name: $p1Name")
+    println("Class: ${p1Class[NAME]}")
+    var p1Health = p1Class[HEALTH] as Int //set up player health variable
 
     //player 2 setup
     println()
     println("Lets set up player 2")
     //Get name
-    val p2name = getString("Please enter your characters name: ")
+    val p2Name = getString("Please enter your characters name: ")
     //ask if player wants to read class descriptions if no then pass
     descClass()
     //Get class
-    val p2class = chooseClass()
+    val p2Class = chooseClass()
     println()
     //list all parts of player one's data
     println("Player two -----------")
-    println("Name: $p2name")
-    println("Class: ${p2class[NAME]}")
-    var p2health = p2class[HEALTH] as Int
+    println("Name: $p2Name")
+    println("Class: ${p2Class[NAME]}")
+    var p2Health = p2Class[HEALTH] as Int
 
     //final set up
     println("LET THE BATTLE BEGIN:")
     //set default distance between players for the start of the battle
     var distance = DEFAULT_DISTANCE
     //setup variable in order to check whose turn it is
-    val playernames = listOf(p1name,p2name) //set up list for player names to draw from
+    val playernames = listOf(p1Name,p2Name) //set up list for player names to draw from
     var currentP = 0 // set up variable to tell function which players turn it is
 
     //figure out who starts first based on a random value
     when (STARTER) {
         0 -> {
-            println("$p1name goes first!")
+            println("$p1Name goes first!")
             currentP = 0
         }
         1 -> {
-            println("$p2name goes first!")
+            println("$p2Name goes first!")
             currentP = 1
         }
     }
 
     //start battle
-    while (p1health > 0 && p2health > 0) { //begin game loop
+    while (p1Health > 0 && p2Health > 0) { //begin game loop
         println(DIVIDER)
         println("The field of battle")
         println()
-        battlefield(distance, p1name, p2name) //show the players how far away they are from each other
+        battlefield(distance, p1Name, p2Name) //show the players how far away they are from each other
+        println("PLayer health:")
+        print("$p1Name health: $p1Health  ") //show player 1's health
+        print("$p2Name health: $p2Health") //show player 2's health
         println(DIVIDER)
-        print("$p1name health: $p1health") //show player 1's health
-        print("$p2name health: $p2health") //show player 2's health
-        val userinput = playerAction(currentP, playernames) //get the current players input on what they would like to do this turn
-        when (userinput) {
+        print("$p1Name health: $p1Health") //show player 1's health
+        print("$p2Name health: $p2Health") //show player 2's health
+        val userInput = playerAction(currentP, playernames) //get the current players input on what they would like to do this turn
+        when (userInput) {
             //if a is selected then check if the player can attack and if they can then do so
-            'a' -> { val damage = attack (currentP, p1health, p2health, distance, p1class , p2class, p1name, p2name)
+            'a' -> { val damage = attack (currentP, p1Health, p2Health, distance, p1Class , p2Class, p1Name, p2Name)
             if (currentP == 0){ //figure out which players turn it is
-                p2health -= damage //update player 2's health
+                p2Health -= damage //update player 2's health
 
             }
-            else p1health -= damage //update player 1's health
+            else p1Health -= damage //update player 1's health
             }
-          'm' -> distance = move(currentP, distance, p1name, p2name, p1class, p2class) //if m is selected then move the player the desired direction
+          'm' -> {
+              distance = move(
+                  currentP,
+                  distance,
+                  p1Name,
+                  p2Name,
+                  p1Class,
+                  p2Class
+              )  //if m is selected then move the player the desired direction
+              if (distance <= 0) {
+                distance = 0
+              }
+          }
           'h' ->  if (currentP == 0 ) { // if h is selected then heal the player a random amount between 1 and 6
-                p1health = heal(currentP, p1health, p2health, p1name, p2name, p1class,p2class) //update player 1's health by generated amount
+                p1Health = heal(currentP, p1Health, p2Health, p1Name, p2Name, p1Class,p2Class) //update player 1's health by generated amount
           }
             else {
-                p2health = heal(currentP, p1health, p2health, p1name, p2name, p1class, p2class) //update player 2's health by generated amount
+                p2Health = heal(currentP, p1Health, p2Health, p1Name, p2Name, p1Class, p2Class) //update player 2's health by generated amount
             }
         }
 
@@ -158,179 +173,36 @@ fun main() {
     }
 
     //check if a player has no health remaining and if they don't tell the player that the other player won
-    if (p1health <= 1){
+    if (p1Health <= 1){
         println()
-        println("Congratulations $p2name you have won the battle!!!!")
+        println("Congratulations $p2Name you have won the battle!!!!")
     }
-    if (p2health <= 1){
+    if (p2Health <= 1){
         println()
-        println("Congratulations $p1name you have won the battle!!!!")
+        println("Congratulations $p1Name you have won the battle!!!!")
     }
     }
-
-
 
 /**
- * Function for the user to choose what action they take on their turn
+ * Function to get user input on whether they want to read the rules
  *
- * parameters
- * currentP: the player whos turn it is currently
- * p1health: player one's remaining hitpoints
- * p2health: player two's remaining hitpoints
- * returns:
- * the string the user entered if it is a class in the CLASSES list
+ * parameters:
+ * userInput: entered char from the user
+ *
  */
-fun playerAction(currentP:Int,  playernames: List<String>):Char {
-    val currentPName = playernames[currentP] //find out what the current players name is
-    val userinput = getChar(" $currentPName choose an action: \n$DIVIDER\n ATTACK [A] \n MOVE [M] \n HEAL [H] \n", "amh") //get the player input as to what they want to do this turn
-    println()
-    return userinput
-}
-
-/**
- * Function to decide how much the player heals after they choose to heal
- *
- * parameters
- * currentP: the player whos turn it is currently
- * p1health: player one's remaining hitpoints
- * p2health: player two's remaining hitpoints
- * p1name: name of player 1
- * p2name: name of player 2
- * p1class: list of player 1's stats
- * p2class: list of player 2's stats
- *
- * returns: what the healed players new health value is
- */
-fun heal(currentP:Int, p1health: Int,p2health: Int, p1name: String,p2name: String, p1class: List<Any>, p2class: List<Any>): Int {
-    when (currentP) { //check which players turn it is
-        0 -> { //P1 heals
-            val heal = (1..6).random() //generate the number of hitpoints to add
-
-            if (p1health + heal >= p1class[HEALTH] as Int) { //check if, after being healed, the current players health will be above the maximum for their class
-                println("$p1name heals $heal and is now at max health which is ${p1class[HEALTH]}.")
-                return p1class[HEALTH] as Int // if it is above max then return the max so the player can't gain more than the specified max health
-            } else {
-                println("$p1name heals $heal and is now at ${p1health + heal} health.")
-                return p1health + heal //if it won't go above the max then return their current health with the healed amount added on
-            }
-        }
-
-
-        1 -> { //P2 heals
-                // do the same as above for player instead
-            val heal = (1..6).random()
-
-            if (p2health + heal >= p2class[HEALTH] as Int) {
-                println("$p2name heals $heal and is now at max health which is ${p2class[HEALTH]}.")
-                return p2class[HEALTH] as Int
-            } else {
-                println("$p2name heals $heal and is now at ${p2health + heal} health.")
-                return p2health + heal
-            }
-
-
-        }
-
+fun rules(userInput: Char){
+    if (userInput == 'y' ) { //check if the user input is y if it is print the rules
+        println()
+        println("These are the rules:")
+        println("At the start of the battle each player will pick a class.")
+        println("These classes decide the weapons, health and abilities that you will have access to in the battle.")
+        println("Once classes have been selected the battle will begin and each player will take turns making a move against their opponent")
+        println("these moves include: attacking, healing, moving or using a special class ability ")
     }
-    return 0 // never reached
-}
-
-/**
- * Function to move the player either left or right when move is selected
- *
- * parameters
- * currentP: the player whos turn it is currently
- * distance: the current distance between the players
- * p1name: name of player 1
- * p2name: name of player 2
- * p1class: list of player 1's stats
- * p2class: list of player 2's stats
- *
- * returns: what the healed players new health value is
- */
-fun move(currentP: Int, distance: Int, p1name: String, p2name: String, p1class: List<Any>, p2class: List<Any>):Int {
-    val direction = getChar("Do you want to move left or right", "lr") //ask the player which direction they want to move
-
-    when (currentP) { //check which players turn it is
-        0 -> { //P1 moves
-            val speed = p1class[SPEED] as Int //get player 1's speed from their class stats
-            //if the player chose l then move them left by their speed value
-            if (direction == 'l') {
-                val movement = distance + speed //movement is the new value for distance by adding the speed to the current distance
-                println("$p1name moves $speed steps")
-                return movement //return movement aka new value for distance
-            }
-            //if the player chose r then move them right by their speed value
-            else if (direction == 'r'){
-                val movement = distance - speed
-                println("$p1name moves $speed steps")
-                return movement
-            }
-        }
-
-        1 -> { //P2 moves
-            val speed = p2class[SPEED] as Int
-            if (direction == 'l') {
-                val movement = distance - speed
-                println("$p2name moves $speed steps")
-                return movement
-
-            }
-            else if (direction == 'r') {
-                val movement = distance + speed
-                println("$p2name moves $speed steps")
-                return movement
-            }
-        }
-
-
+    else if (userInput== 'n') { //if the input is n then skip the rules
+        println("Skipping rules...")
     }
-    return 0 //never reached
 }
-
-
-/**
- * Function decide whether the player hits and how much damage they do when attack is selected
- *
- * parameters
- * currentP: the player whos turn it is currently
- * distance: the current distance between the players
- * p1name: name of player 1
- * p2name: name of player 2
- * p1class: list of player 1's stats
- * p2class: list of player 2's stats
- * p1health: player 1's health
- * p2health: player 2's health
- *
- * returns: how much damage is dealt to the other player
- */
-fun attack(currentP:Int, p1health:Int, p2health:Int, distance:Int, p1class: List<Any>, p2class: List<Any>, p1name: String, p2name: String): Int {
-    when (currentP) { //check which players turn it is
-        0 -> { //P1 attacks
-            val attackRange = p1class[RANGE] as Int //get player 1's range from their class list
-            if (attackRange >= distance) { //check whether the players range is greater than the distance between the players to decide whether they hit
-                val damage =(1.. p1class[DAMAGE] as Int).random() //if they hit decide how much damage they do between 1 and the max damage they can do as defined by their class list
-                println("$p1name takes a swing at $p2name")
-                println("The hit lands dealing $damage damage. $p2name is now at ${p2health - damage} health.")
-                return damage //return the damage value
-            } else println("Sorry $p1name, $p2name is too far away your range is ${p1class[RANGE]}.") //if the player is out of range tell the current player that this is the case and what their range is
-        }
-
-        1 -> { //P2 attacks
-            val attackRange = p2class[RANGE] as Int
-            if (attackRange >= distance) {
-                val damage =(1.. p2class[DAMAGE] as Int).random()
-                println("$p2name takes a swing at $p1name")
-                println("The hit lands dealing $damage damage. $p1name is now at ${p1health - damage} health.")
-                return damage
-            } else println("Sorry $p2name, $p1name is too far away your range is ${p2class[RANGE]}.")
-        }
-
-
-    }
-    return 0 //never reached
-}
-
 
 /**
  * Function to get user input on whether they want to read the class descriptions
@@ -339,8 +211,8 @@ fun attack(currentP:Int, p1health:Int, p2health:Int, distance:Int, p1class: List
  */
 fun descClass() {
     println("Would you like to read the class descriptions? ")
-    var userinput = getChar("[Y]es or [N]o ", "yn") //get the users input to decide whether they want to read the class descriptions
-    if (userinput == 'y'){ // if user input is y then list the classes
+    var userInput = getChar("[Y]es or [N]o ", "yn") //get the users input to decide whether they want to read the class descriptions
+    if (userInput == 'y'){ // if user input is y then list the classes
         println()
         //list classes
         println("The classes are:")
@@ -349,8 +221,8 @@ fun descClass() {
         }
         //and get user input on the class they want to learn about and print the relevant description
         while (true){
-        userinput = getChar("Please enter the first letter of the class you want to learn about. Enter [X] to exit ", "fahbx")
-            when (userinput) {
+            userInput = getChar("Please enter the first letter of the class you want to learn about. Enter [X] to exit ", "fahbx")
+            when (userInput) {
                 'f' -> {println(FIGHTER[DESCRIPTION]); println(); continue} //when f is entered print fighter description
                 'a' -> {println(ARCHER[DESCRIPTION]); println(); continue} //when a is entered print archer description
                 'b' -> {println(BARBARIAN[DESCRIPTION]); println(); continue} //when b is entered print barbarian description
@@ -360,7 +232,6 @@ fun descClass() {
         }
     }
 }
-
 
 /**
  * Function for the user to choose a class
@@ -377,12 +248,12 @@ fun chooseClass(): List<Any> {
         println(classInfo[NAME])
     }
     while (true) {
-        val userinput = getString("Type the classes' name to select it ") //get userinput on the class that the player wants
-        when (userinput.lowercase()) {
-            "fighter" -> return FIGHTER //if fighter entered then will return fighter class stats
-            "archer" -> return ARCHER //if archer entered then will return archer class stats
-            "hoplite" -> return HOPLITE //if hoplite entered then will return hoplite class stats
-            "barbarian" -> return BARBARIAN //if barbarian entered then will return barbarian class stats
+        val userInput = getString("Type the classes' name to select it ") //get userInput on the class that the player wants
+        when (userInput.lowercase().first()) {
+            'f' -> return FIGHTER //if fighter entered then will return fighter class stats
+            'a' -> return ARCHER //if archer entered then will return archer class stats
+            'h' -> return HOPLITE //if hoplite entered then will return hoplite class stats
+            'b' -> return BARBARIAN //if barbarian entered then will return barbarian class stats
             else -> println(ERROR) //if player doesn't enter a valid input then print error message
         }
     }
@@ -394,15 +265,175 @@ fun chooseClass(): List<Any> {
  *
  * parameters
  * distance: the distance between both players
- * p1name: player 1's name
- * p2name: player 2's name
+ * p1Name: player 1's name
+ * p2Name: player 2's name
  */
-fun battlefield(distance:Int,p1name:String, p2Name:String){
-    print(p1name) //print player 1's name
+fun battlefield(distance:Int,p1Name:String, p2Name:String){
+    print(p1Name) //print player 1's name
     for (steps in 1..distance)print("_")//print number of underscores equal to distance between players
     println(p2Name) //print player 2's name
 }
 
+/**
+ * Function for the user to choose what action they take on their turn
+ *
+ * parameters
+ * currentP: the player whos turn it is currently
+ * p1Health: player one's remaining hitpoints
+ * p2Health: player two's remaining hitpoints
+ * returns:
+ * the string the user entered if it is a class in the CLASSES list
+ */
+fun playerAction(currentP:Int,  playernames: List<String>):Char {
+    val currentPName = playernames[currentP] //find out what the current players name is
+    val userInput = getChar(" $currentPName choose an action: \n$DIVIDER\n ATTACK [A] \n MOVE [M] \n HEAL [H] \n", "amh") //get the player input as to what they want to do this turn
+    println()
+    return userInput
+}
+
+/**
+ * Function to decide how much the player heals after they choose to heal
+ *
+ * parameters
+ * currentP: the player whos turn it is currently
+ * p1Health: player one's remaining hitpoints
+ * p2Health: player two's remaining hitpoints
+ * p1Name: name of player 1
+ * p2Name: name of player 2
+ * p1Class: list of player 1's stats
+ * p2Class: list of player 2's stats
+ *
+ * returns: what the healed players new health value is
+ */
+fun heal(currentP:Int, p1Health: Int,p2Health: Int, p1Name: String,p2Name: String, p1Class: List<Any>, p2Class: List<Any>): Int {
+    when (currentP) { //check which players turn it is
+        0 -> { //P1 heals
+            val heal = (1..6).random() //generate the number of hitpoints to add
+
+            if (p1Health + heal >= p1Class[HEALTH] as Int) { //check if, after being healed, the current players health will be above the maximum for their class
+                println("$p1Name heals $heal and is now at max health which is ${p1Class[HEALTH]}.")
+                return p1Class[HEALTH] as Int // if it is above max then return the max so the player can't gain more than the specified max health
+            } else {
+                println("$p1Name heals $heal and is now at ${p1Health + heal} health.")
+                return p1Health + heal //if it won't go above the max then return their current health with the healed amount added on
+            }
+        }
+
+
+        1 -> { //P2 heals
+                // do the same as above for player instead
+            val heal = (1..6).random()
+
+            if (p2Health + heal >= p2Class[HEALTH] as Int) {
+                println("$p2Name heals $heal and is now at max health which is ${p2Class[HEALTH]}.")
+                return p2Class[HEALTH] as Int
+            } else {
+                println("$p2Name heals $heal and is now at ${p2Health + heal} health.")
+                return p2Health + heal
+            }
+
+
+        }
+
+    }
+    return 0 // never reached
+}
+
+/**
+ * Function to move the player either left or right when move is selected
+ *
+ * parameters
+ * currentP: the player whos turn it is currently
+ * distance: the current distance between the players
+ * p1Name: name of player 1
+ * p2Name: name of player 2
+ * p1Class: list of player 1's stats
+ * p2Class: list of player 2's stats
+ *
+ * returns: what the healed players new health value is
+ */
+fun move(currentP: Int, distance: Int, p1Name: String, p2Name: String, p1Class: List<Any>, p2Class: List<Any>):Int {
+    val direction = getChar("Do you want to move left or right", "lr") //ask the player which direction they want to move
+
+    when (currentP) { //check which players turn it is
+        0 -> { //P1 moves
+            val speed = p1Class[SPEED] as Int //get player 1's speed from their class stats
+            //if the player chose l then move them left by their speed value
+            if (direction == 'l') {
+                val movement = distance + speed //movement is the new value for distance by adding the speed to the current distance
+                println("$p1Name moves $speed steps")
+                return movement //return movement aka new value for distance
+            }
+            //if the player chose r then move them right by their speed value
+            else if (direction == 'r'){
+                val movement = distance - speed
+                println("$p1Name moves $speed steps")
+                return movement
+            }
+        }
+
+        1 -> { //P2 moves
+            val speed = p2Class[SPEED] as Int
+            if (direction == 'l') {
+                val movement = distance - speed
+                println("$p2Name moves $speed steps")
+                return movement
+
+            }
+            else if (direction == 'r') {
+                val movement = distance + speed
+                println("$p2Name moves $speed steps")
+                return movement
+            }
+        }
+
+
+    }
+    return 0 //never reached
+}
+
+
+/**
+ * Function decide whether the player hits and how much damage they do when attack is selected
+ *
+ * parameters
+ * currentP: the player whos turn it is currently
+ * distance: the current distance between the players
+ * p1Name: name of player 1
+ * p2Name: name of player 2
+ * p1Class: list of player 1's stats
+ * p2Class: list of player 2's stats
+ * p1Health: player 1's health
+ * p2Health: player 2's health
+ *
+ * returns: how much damage is dealt to the other player
+ */
+fun attack(currentP:Int, p1Health:Int, p2Health:Int, distance:Int, p1Class: List<Any>, p2Class: List<Any>, p1Name: String, p2Name: String): Int {
+    when (currentP) { //check which players turn it is
+        0 -> { //P1 attacks
+            val attackRange = p1Class[RANGE] as Int //get player 1's range from their class list
+            if (attackRange >= distance) { //check whether the players range is greater than the distance between the players to decide whether they hit
+                val damage =(1.. p1Class[DAMAGE] as Int).random() //if they hit decide how much damage they do between 1 and the max damage they can do as defined by their class list
+                println("$p1Name takes a swing at $p2Name")
+                println("The hit lands dealing $damage damage. $p2Name is now at ${p2Health - damage} health.")
+                return damage //return the damage value
+            } else println("Sorry $p1Name, $p2Name is too far away your range is ${p1Class[RANGE]}.") //if the player is out of range tell the current player that this is the case and what their range is
+        }
+
+        1 -> { //P2 attacks
+            val attackRange = p2Class[RANGE] as Int
+            if (attackRange >= distance) {
+                val damage =(1.. p2Class[DAMAGE] as Int).random()
+                println("$p2Name takes a swing at $p1Name")
+                println("The hit lands dealing $damage damage. $p1Name is now at ${p1Health - damage} health.")
+                return damage
+            } else println("Sorry $p2Name, $p1Name is too far away your range is ${p2Class[RANGE]}.")
+        }
+
+
+    }
+    return 0 //never reached
+}
 
 /**
  * Function to get a string from the user
@@ -413,18 +444,16 @@ fun battlefield(distance:Int,p1name:String, p2Name:String){
  * returns:
  * -string that the user has entered
  */
-
 fun getString(prompt: String): String {
-    var userinput: String
+    var userInput: String
     while (true) {
         print(prompt)
-        userinput = readln() //get user input
-        if (userinput.isNotBlank()) break //check if the user input isn't blank if it isn't return it if it ask again
+        userInput = readln() //get user input
+        if (userInput.isNotBlank()) break //check if the user input isn't blank if it isn't return it if it ask again
 
     }
-    return userinput
+    return userInput
 }
-
 
 
 /**
@@ -440,30 +469,9 @@ fun getString(prompt: String): String {
  */
 fun getChar(prompt: String, check: String): Char {
     while (true) {
-        val userinput = getString(prompt).lowercase().first() //get string from user and take first character
-        if (check.contains(userinput)) return userinput //check the users input against the letters that are being checked for
+        val userInput = getString(prompt).lowercase().first() //get string from user and take first character
+        if (check.contains(userInput)) return userInput //check the users input against the letters that are being checked for
         else println(ERROR) //if it doesn't ask again
 
-    }
-}
-
-/**
- * Function to get user input on whether they want to read the rules
- *
- * parameters:
- * userinput: entered char from the user
- *
- */
-fun rules(userinput: Char){
-    if (userinput == 'y' ) { //check if the user input is y if it is print the rules
-        println()
-        println("These are the rules:")
-        println("At the start of the battle each player will pick a class.")
-        println("These classes decide the weapons, health and abilities that you will have access to in the battle.")
-        println("Once classes have been selected the battle will begin and each player will take turns making a move against their opponent")
-        println("these moves include: attacking, healing, moving or using a special class ability ")
-    }
-    else if (userinput== 'n') { //if the input is n then skip the rules
-        println("Skipping rules...")
     }
 }
