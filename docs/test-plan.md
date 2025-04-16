@@ -10,9 +10,10 @@ Terminology:
 
 ---
 
-## Rules preference entry
+## Asking the user if they want to read the rules
 
-the player can choose whether to read the rules or not by entering y or n
+the player can choose whether to read the rules or not by entering y, n ,Y or N I will
+test this by entering these values as well as invalid inputs as listed below
 
 ### Test Data To Use
 
@@ -25,17 +26,28 @@ when Y or y is entered the player will be shown the rules. If N or n is entered 
 
 ---
 
-## Example Test Name
+## String retrieval aka user input e.g. getting player names
 
-Example test description. Example test description. Example test description. Example test description. Example test description. Example test description.
+the getString() function when used should ask the user to enter a string by printing the 
+prompt defined in the function call, when a string is received it should be checked if it is blank if it is ask
+for a new string if it does contain a valid then return it 
+
+to test this I will use the assignment of p1Name and the assignment of the value userInput in the chooseclass function
 
 ### Test Data To Use
 
-Details of test data and reasons for selection. Details of test data and reasons for selection. Details of test data and reasons for selection.
+p1Name:
+    valid: "Jeve Stobs" (for string check), 42 (check if ints are taken as strings), b (check if chars are taken as strings)
+    invalid: blank input (to check if it is refused)
+
+userInput: 
+    valid: "Fighter" (to test acceptance of valid class names),f (to check acceptance of valid first letters of class names), 42
+    invalid: blank input (to check if it is refused), z (to check invalid first letter chars)
 
 ### Expected Test Result
 
-Statement detailing what should happen. Statement detailing what should happen. Statement detailing what should happen. Statement detailing what should happen. 
+When the getString() function is called the defined prompt is printed then the user able to enter a string, if this
+string is blank then the user is asked to enter a new string, otherwise the entered string is returned
 
 ---
 
