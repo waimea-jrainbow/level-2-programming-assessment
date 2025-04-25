@@ -443,6 +443,7 @@ fun attack(currentP:Int, p1Health:Int, p2Health:Int, distance:Int, p1Class: List
  * -text to show user
  * returns:
  * -string that the user has entered
+ * 
  */
 fun getString(prompt: String): String {
     var userInput: String

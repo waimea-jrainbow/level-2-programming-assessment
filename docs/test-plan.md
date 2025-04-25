@@ -25,6 +25,8 @@ Invalid = 1 (to make sure it refuses int inputs), lorem (to make sure it refuses
 when Y or y is entered the player will be shown the rules. If N or n is entered the program will move onto the next section. if anything else is entered the program will ask the user to try again with a valid entry.
 
 ---
+# Setup
+
 
 ## String retrieval aka user input e.g. getting player names
 
@@ -50,5 +52,11 @@ When the getString() function is called the defined prompt is printed then the u
 string is blank then the user is asked to enter a new string, otherwise the entered string is returned
 
 ---
+
+### Full setup
+
+### Test Data 
+
+### Expected Test Result 
 
 

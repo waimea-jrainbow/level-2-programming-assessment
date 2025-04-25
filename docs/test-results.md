@@ -21,7 +21,7 @@ Invalid = 1 (to make sure it refuses int inputs), lorem (to make sure it refuses
 
 ![rules-lorem.png](screenshots/rules-lorem.png)
 
-as expected on entry of valid inputs correct outcomes are achieved and on invalid inputs the user is prompted to renter another input
+As expected on entry of valid inputs correct outcomes are achieved and on invalid inputs the user is prompted to renter another input
 
 ---
 
@@ -65,12 +65,12 @@ Jeve Stobs:
 ![getString()42P1Name.png](screenshots/getString%28%2942P1Name.png)
     
 b:  
-![example.png](screenshots/example.png)  
+![getString()bP1Name.png](screenshots/getString()bP1Name.png)  
     
 blank:  
-![example.png](screenshots/example.png)  
+![getStringblankP1Name.png](screenshots/getString()blankP1Name.png)  
 
-Comment on test result. Comment on test result. Comment on test result. Comment on test result. Comment on test result. Comment on test result.
+As expected on entry of valid inputs correct outcomes are achieved and on invalid inputs the user is prompted to renter another input
 
 ---
 
