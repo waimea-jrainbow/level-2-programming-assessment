@@ -17,8 +17,11 @@ test this by entering these values as well as invalid inputs as listed below
 
 ### Test Data To Use
 
-valid = Y, N, y, n (in order to check whether the intended outcomes are reached and that it can accept both upper and lower case)
-Invalid = 1 (to make sure it refuses int inputs), lorem (to make sure it refuses string inputs), g (to make sure it refuses chars other than y and n), a blank input to check that it refuses them
+#### valid:
+    Y, N, y, n (in order to check whether the intended outcomes are reached and that it can accept both upper and lower case)
+
+#### Invalid: 
+    1 (to make sure it refuses int inputs), lorem (to make sure it refuses string inputs), g (to make sure it refuses chars other than y and n), a blank input to check that it refuses them
 
 ### Expected Test Result
 
@@ -38,12 +41,12 @@ to test this I will use the assignment of p1Name and the assignment of the value
 
 ### Test Data To Use
 
-p1Name:
-    valid: "Jeve Stobs" (for string check), 42 (check if ints are taken as strings), b (check if chars are taken as strings)
+#### p1Name:
+    valid: "Jeve Stobs" (for string check), 42 (check if ints are taken as strings), b (check if chars are taken as strings)    
     invalid: blank input (to check if it is refused)
 
-userInput: 
-    valid: "Fighter" (to test acceptance of valid class names),f (to check acceptance of valid first letters of class names), 42
+#### userInput: 
+    valid: "Fighter" (to test acceptance of valid class names),f (to check acceptance of valid first letters of class names), 42  
     invalid: blank input (to check if it is refused), z (to check invalid first letter chars)
 
 ### Expected Test Result
@@ -54,9 +57,29 @@ string is blank then the user is asked to enter a new string, otherwise the ente
 ---
 
 ### Full setup
+When the full setup runs the user will be asked for their name, whether they 
+want to read the class descriptions and then asked what class they want to choose
+and finally these choices are displayed to the players
+
+descClass():
+The user can choose whether to read the class descriptions with y or n then 
+if they chose yes then they can enter the first letter of the class they wish to 
+read about or type x in order to exit and continue to class selection
+
+Contains getString(),descClass(),chooseClass()
 
 ### Test Data 
 
+#### getString():
+    valid: "Jeve Stobs" (for string check), 42 (check if ints are taken as strings), b (check if chars are taken as strings)  
+    invalid: blank input (to check if it is refused)
+#### descClass():
+    valid: f,x
+    invalid: Clone (String test), 7(Integer test),g(Incorrect char test)
+#### chooseClass():
+    valid:f(Correct char), fighter(Correct string)
+    invalid:Picture(Incorrect String),k(Incorrect Char), 5(Integer test)
 ### Expected Test Result 
-
+After the rules() function runs the first player is asked for their name,whether they 
+want to read class descriptions and what class they want and finally these decisions are shown
 
