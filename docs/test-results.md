@@ -19,13 +19,13 @@ I will enter valid and invalid inputs into the rules prompt and record the outco
 
 ---
 
-![rules-y.png](screenshots/rules-y.png)
+![rules-y.png](screenshots/rules/rules-y.png)
 
 ---
-![rules-n.png](screenshots/rules-n.png)
+![rules-n.png](screenshots/rules/rules-n.png)
 
 ---
-![rules-lorem.png](screenshots/rules-lorem.png)
+![rules-lorem.png](screenshots/rules/rules-lorem.png)
 
 ---
 As expected on entry of valid inputs correct outcomes are achieved and on invalid inputs the user is prompted to renter another input
@@ -61,23 +61,71 @@ I will enter the following data into the relevant fields:
 p1Name is shown as name in the following images 
 userInput is shown as Class in the following images:
 ---
-#### p1name:  
 
 Jeve Stobs:  
-![getString()JeveStobsP1Name.png](screenshots/getString()JeveStobsP1Name.png)  
+![getString()JeveStobsP1Name.png](screenshots/getstring/getString()JeveStobsP1Name.png)  
     
 42:  
-![getString()42P1Name.png](screenshots/getString%28%2942P1Name.png)
+![getString()42P1Name.png](screenshots/getstring/getString()42P1Name.png)
     
 b:  
-![getString()bP1Name.png](screenshots/getString()bP1Name.png)  
+![getString()bP1Name.png](screenshots/getstring/getString()bP1Name.png)  
     
 Blank:  
-![getStringblankP1Name.png](screenshots/getString()blankP1Name.png)  
+![getStringblankP1Name.png](screenshots/getstring/getString()blankP1Name.png)  
 
 As expected on entry of valid inputs correct outcomes are achieved and on invalid inputs the user is prompted to renter another input
 
 ---
+## descClass
+The user will be asked whether they wish to read the descriptions of the classes and be poormpted with a y or n answer
+on entry of n the program will move onto the next function ignoring the rest of descClass(). On entry of y the user will
+be shown a list of the classes and be prompted to entry the first letter of the classes name in order to read about it
+on entry of a letter the respective classes description will be printed and then the user will be asked if they wish to read another
+description. On entry of the char x the loop will be broken and the program will move onto the next function
+
+#### Test data used
+
+#### userinput 1
+    valid: y, n
+    invalid: word, 72, x, blank
+#### userinput 2
+    valid: f, b, h, a, x
+    invalid: word, 72, c, blank
+    
+#### Test result
+
+#### userinput 1  
+y
+![descClass()_y_userinput_1.png](screenshots/descClass/descClass()_y_userinput_1.png)
+
+---
+
+n
+![descClass()_n_userinput_1.png](screenshots/descClass/descClass()_n_userinput_1.png)
+
+---
+
+word
+![descClass()_word_userinput_1.png](screenshots/descClass/descClass()_word_userinput_1.png)
+
+---
+
+72
+![descClass()_72_userinput_1.png](screenshots/descClass/descClass()_72_userinput_1.png)
+---
+
+c
+
+---
+
+blank
+
+---
+#### userinput 2
+
+---
+
 ## Full Setup
 When the full setup runs the user will be asked for their name, whether they
 want to read the class descriptions and then asked what class they want to choose
@@ -92,13 +140,11 @@ Contains getString(),descClass(),chooseClass()
 
 ### Test data used 
 #### getString():
-    valid: "Jeve Stobs" (for string check), 42 (check if ints are taken as strings), b (check if chars are taken as strings)  
-    invalid: blank input (to check if it is refused)
+    valid: "Jeve Stobs"
 #### descClass():
-    valid: f,x
-    invalid: Clone (String test), 7(Integer test),g(Incorrect char test)
+    valid would you like to read: y
+    valid choose class to read about: f,x (to test exiting class descriptions)
 #### chooseClass():
-    valid:f(Correct char), fighter(Correct string)
-    invalid:Picture(Incorrect String),k(Incorrect Char), 5(Integer test)
+    valid:f
 
 #### Test result:

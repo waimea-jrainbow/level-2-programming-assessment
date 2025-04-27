@@ -55,6 +55,33 @@ When the getString() function is called the defined prompt is printed then the u
 string is blank then the user is asked to enter a new string, otherwise the entered string is returned
 
 ---
+## descClass
+The user will be asked whether they wish to read the descriptions of the classes and be prompted with a y or n answer
+on entry of n the program will move onto the next function ignoring the rest of descClass(). On entry of y the user will
+be shown a list of the classes and be prompted to entry the first letter of the classes name in order to read about it
+on entry of a letter the respective classes description will be printed and then the user will be asked if they wish to read another
+description. On entry of the char x the loop will be broken and the program will move onto the next function
+
+To test this I will enter all valid inputs for each prompt and then enter invalid values to test reactions to strings, ints, 
+invalid char characters and blank inputs
+
+#### Test data to use
+
+#### userinput 1
+    valid: y, n
+    invalid: word, 72, x, blank
+#### userinput 2
+    valid: f, b, h, a, x
+    invalid: word, 72, c, blank
+
+#### Expected test result
+I expect the first userinput to accept on y or n inputs of any capitalization and reject all other inputs by asking the user 
+to enter a new input
+I expect the second userinput to accept on the first letters of each class and the char x. On entry of a first letter the relevant 
+description will be printed if x is entered the loop will break and the function will end if anything else is entered it will be refused 
+by asking the user for a valid input
+
+---
 
 ### Full setup
 When the full setup runs the user will be asked for their name, whether they 
