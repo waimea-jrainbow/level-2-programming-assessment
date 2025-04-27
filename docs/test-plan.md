@@ -81,5 +81,5 @@ Contains getString(),descClass(),chooseClass()
     invalid:Picture(Incorrect String),k(Incorrect Char), 5(Integer test)
 ### Expected Test Result 
 After the rules() function runs the first player is asked for their name,whether they 
-want to read class descriptions and what class they want and finally these decisions are shown
+want to read class descriptions and what class they want and finally these decisions are shown printed for the players to read
 
