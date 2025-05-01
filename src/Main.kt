@@ -130,12 +130,11 @@ fun main() {
         println("The field of battle")
         println()
         battlefield(distance, p1Name, p2Name) //show the players how far away they are from each other
-        println("PLayer health:")
+        println("Players health:")
         print("$p1Name health: $p1Health  ") //show player 1's health
-        print("$p2Name health: $p2Health") //show player 2's health
+        println("$p2Name health: $p2Health") //show player 2's health
         println(DIVIDER)
-        print("$p1Name health: $p1Health") //show player 1's health
-        print("$p2Name health: $p2Health") //show player 2's health
+
         val userInput = playerAction(currentP, playernames) //get the current players input on what they would like to do this turn
         when (userInput) {
             //if a is selected then check if the player can attack and if they can then do so
@@ -153,11 +152,10 @@ fun main() {
                   p1Name,
                   p2Name,
                   p1Class,
-                  p2Class
+                  p2Class,
+                  playernames
               )  //if m is selected then move the player the desired direction
-              if (distance <= 0) {
-                distance = 0
-              }
+
           }
           'h' ->  if (currentP == 0 ) { // if h is selected then heal the player a random amount between 1 and 6
                 p1Health = heal(currentP, p1Health, p2Health, p1Name, p2Name, p1Class,p2Class) //update player 1's health by generated amount
@@ -221,7 +219,7 @@ fun descClass() {
         }
         //and get user input on the class they want to learn about and print the relevant description
         while (true){
-            userInput = getChar("Please enter the first letter of the class you want to learn about. Enter [X] to exit ", "fahbx")
+            userInput = getChar("Please enter the first letter or the name of the class you want to learn about. Enter [X] to exit ", "fahbx")
             when (userInput) {
                 'f' -> {println(FIGHTER[DESCRIPTION]); println(); continue} //when f is entered print fighter description
                 'a' -> {println(ARCHER[DESCRIPTION]); println(); continue} //when a is entered print archer description
@@ -352,25 +350,38 @@ fun heal(currentP:Int, p1Health: Int,p2Health: Int, p1Name: String,p2Name: Strin
  *
  * returns: what the healed players new health value is
  */
-fun move(currentP: Int, distance: Int, p1Name: String, p2Name: String, p1Class: List<Any>, p2Class: List<Any>):Int {
+fun move(currentP: Int, distance: Int, p1Name: String, p2Name: String, p1Class: List<Any>, p2Class: List<Any>, playernames: List<String>):Int {
     val direction = getChar("Do you want to move left or right", "lr") //ask the player which direction they want to move
-
+    val currentPName = playernames[currentP]
     when (currentP) { //check which players turn it is
         0 -> { //P1 moves
             val speed = p1Class[SPEED] as Int //get player 1's speed from their class stats
             //if the player chose l then move them left by their speed value
             if (direction == 'l') {
+                if (distance < 1) {
+                    val movement = 0
+                    println("$currentPName cannot move any further that way.")
+                    return movement
+                }
+                else {
+                    val movement = distance + speed //movement is the new value for distance by adding the speed to the current distance
+                    println("$p1Name moves $speed steps")
+                    return movement //return movement aka new value for distance
+                }
+            }
+            //if the player chose r then move them right by their speed value
+            if (distance < 1) {
+                val movement = 0
+                println("$currentPName cannot move any further that way.")
+                return movement
+            }
+            else {
                 val movement = distance + speed //movement is the new value for distance by adding the speed to the current distance
                 println("$p1Name moves $speed steps")
                 return movement //return movement aka new value for distance
             }
-            //if the player chose r then move them right by their speed value
-            else if (direction == 'r'){
-                val movement = distance - speed
-                println("$p1Name moves $speed steps")
-                return movement
-            }
         }
+    }
 
         1 -> { //P2 moves
             val speed = p2Class[SPEED] as Int
@@ -448,10 +459,10 @@ fun attack(currentP:Int, p1Health:Int, p2Health:Int, distance:Int, p1Class: List
 fun getString(prompt: String): String {
     var userInput: String
     while (true) {
-        print(prompt)
+        println(prompt)
         userInput = readln() //get user input
         if (userInput.isNotBlank()) break //check if the user input isn't blank if it isn't return it if it ask again
-
+        else println(ERROR)
     }
     return userInput
 }

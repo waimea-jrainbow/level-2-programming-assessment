@@ -90,7 +90,7 @@ description. On entry of the char x the loop will be broken and the program will
     valid: y, n
     invalid: word, 72, x, blank
 #### userinput 2
-    valid: f, b, h, a, x
+    valid: f, b, h, a, x, fighter, barbarian, hoplite, archer
     invalid: word, 72, c, blank
     
 #### Test result
@@ -101,29 +101,70 @@ y
 
 ---
 
-n
+n  
 ![descClass()_n_userinput_1.png](screenshots/descClass/descClass()_n_userinput_1.png)
 
 ---
 
-word
+word  
 ![descClass()_word_userinput_1.png](screenshots/descClass/descClass()_word_userinput_1.png)
 
 ---
 
-72
+72  
 ![descClass()_72_userinput_1.png](screenshots/descClass/descClass()_72_userinput_1.png)
 ---
 
-c
+c  
+![descClass()_c_userinput_1.png](screenshots/descClass/descClass()_c_userinput_1.png)
 
 ---
 
 blank
-
+![descClass()_blank_userinput_1.png](screenshots/descClass/descClass()_blank_userinput_1.png)
+-- Originally when a blank input is entered the error string would not be printed and the prompt to enter an input would just be repeated this was fixed by adding an else statement to the getString() function which is used by getChar() which prints the error string 
+![descClass()_blank_userinput_1_fixed.png](screenshots/descClass/descClass()_blank_userinput_1_fixed.png)
 ---
-#### userinput 2
 
+#### userinput 2
+f  
+![descClass()_f_userinput_2.png](screenshots/descClass/descClass()_f_userinput_2.png)
+---
+b
+![descClass()_b_userinput_2.png](screenshots/descClass/descClass()_b_userinput_2.png)
+---
+h
+![descClass()_h_userinput_2.png](screenshots/descClass/descClass()_h_userinput_2.png)
+---
+a
+![descClass()_a_userinput_2.png](screenshots/descClass/descClass()_a_userinput_2.png)
+---
+x
+![descClass()_x_userinput_2.png](screenshots/descClass/descClass()_x_userinput_2.png)
+---
+fighter
+![descClass()_fighter_userinput_2.png](screenshots/descClass/descClass()_fighter_userinput_2.png)
+---
+barbarian
+![descClass()_barbarian_userinput_2.png](screenshots/descClass/descClass()_barbarian_userinput_2.png)
+---
+hoplite
+![descClass()_hoplite_userinput_2.png](screenshots/descClass/descClass()_hoplite_userinput_2.png)
+---
+archer
+![descClass()_archer_userinput_2.png](screenshots/descClass/descClass()_archer_userinput_2.png)
+---
+cheese
+![descClass()_cheese_userinput_2.png](screenshots/descClass/descClass()_cheese_userinput_2.png)
+---
+29
+![descClass()_29_userinput_2.png](screenshots/descClass/descClass()_29_userinput_2.png)
+---
+i
+![descClass()_i_userinput_2.png](screenshots/descClass/descClass()_i_userinput_2.png)
+---
+blank
+![descClass()_blank_userinput_2.png](screenshots/descClass/descClass()_blank_userinput_2.png)
 ---
 
 ## Full Setup
@@ -140,7 +181,7 @@ Contains getString(),descClass(),chooseClass()
 
 ### Test data used 
 #### getString():
-    valid: "Jeve Stobs"
+    valid: "bob"
 #### descClass():
     valid would you like to read: y
     valid choose class to read about: f,x (to test exiting class descriptions)
@@ -148,3 +189,58 @@ Contains getString(),descClass(),chooseClass()
     valid:f
 
 #### Test result:
+below is a screenshot that shows all the inputs for the setup of player one and these inputs being shown at the end to the players 
+![fullsetup.png](screenshots/fullsetup.png)
+
+
+## player 2 setup
+This should work the same as player 1 setup but addressed to player 2 instead
+
+### Test data
+
+#### getString():
+    valid: "bobert"
+#### descClass():
+    valid: y
+    valid: b, x
+#### chooseClass():
+    valid:b
+
+#### Test result:
+
+![p2setup.png](screenshots/p2setup.png)
+
+## playerAction
+
+### Test data
+
+#### playerAction
+    valid: a in range, a out of range,h,m
+#### attack
+    N/A
+#### heal
+    N/A
+#### move
+    valid:  l,r
+
+#### Test result:
+
+#### playerAction
+a out of range
+![playerAction_aOutOfRange.png](screenshots/playerAction/playerAction_aOutOfRange.png)
+a in range
+![playerAction_aInRange.png](screenshots/playerAction/playerAction_aInRange.png)
+h at max health (Boundary test)
+![playerAction_h_moreThanMax.png](screenshots/playerAction/playerAction_h_moreThanMax.png)
+h below max health 
+![playerAction_h_lessThanMax.png](screenshots/playerAction/playerAction_h_lessThanMax.png)
+m
+![playerAction_m.png](screenshots/playerAction/playerAction_m.png)
+#### move
+l at a greater distance from the other player than movement (Boundary test)
+
+l at a lesser distance from the other player than movement
+![move_lGreater.png](screenshots/playerAction/move_lLesser.png)
+r at a greater distance from the other player than movement 
+
+r at a lesser distance from the other player than movement (Boundary test)
