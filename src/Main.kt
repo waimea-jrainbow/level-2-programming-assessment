@@ -14,7 +14,7 @@
 //utility
 const val ERROR = "Please enter a valid input."
 const val DIVIDER = "-----------------------------------------------------------------------"
-const val DEFAULT_DISTANCE = 4 //how far away to start players when the match starts
+const val DEFAULT_DISTANCE = 4//how far away to start players when the match starts
 val STARTER = ((0..1).random()) //decide who starts first
 
 //class stats (name,description, damage, range, health, speed)
@@ -351,53 +351,61 @@ fun heal(currentP:Int, p1Health: Int,p2Health: Int, p1Name: String,p2Name: Strin
  * returns: what the healed players new health value is
  */
 fun move(currentP: Int, distance: Int, p1Name: String, p2Name: String, p1Class: List<Any>, p2Class: List<Any>, playernames: List<String>):Int {
-    val direction = getChar("Do you want to move left or right", "lr") //ask the player which direction they want to move
+    val direction =
+        getChar("Do you want to move left or right", "lr") //ask the player which direction they want to move
     val currentPName = playernames[currentP]
     when (currentP) { //check which players turn it is
         0 -> { //P1 moves
             val speed = p1Class[SPEED] as Int //get player 1's speed from their class stats
             //if the player chose l then move them left by their speed value
             if (direction == 'l') {
-                if (distance < 1) {
-                    val movement = 0
-                    println("$currentPName cannot move any further that way.")
-                    return movement
-                } else {
                     val movement =
                         distance + speed //movement is the new value for distance by adding the speed to the current distance
                     println("$p1Name moves $speed steps")
                     return movement //return movement aka new value for distance
                 }
-            }
+
             //if the player chose r then move them right by their speed value
-            if (distance < 1) {
-                val movement = 0
-                println("$currentPName cannot move any further that way.")
-                return movement
-            } else {
-                val movement =
-                    distance + speed //movement is the new value for distance by adding the speed to the current distance
-                println("$p1Name moves $speed steps")
-                return movement //return movement aka new value for distance
+            else if (direction == 'r') {
+                return if (distance == 0) {
+                    println("$currentPName cannot move any further that way.")
+                    0
+                } else {
+                    val movement =
+                        distance - speed //movement is the new value for distance by adding the speed to the current distance
+                    println("$p1Name moves $speed steps")
+                    return movement //return movement aka new value for distance
+                }
             }
         }
 
 
         1 -> { //P2 moves
-            val speed = p2Class[SPEED] as Int
+            val speed = p2Class[SPEED] as Int //get player 1's speed from their class stats
+            //if the player chose l then move them left by their speed value
             if (direction == 'l') {
-                val movement = distance - speed
-                println("$p2Name moves $speed steps")
-                return movement
-
-            } else if (direction == 'r') {
-                val movement = distance + speed
-                println("$p2Name moves $speed steps")
-                return movement
+                return if (distance == 0) {
+                    println("$currentPName cannot move any further that way.")
+                    0
+                } else {
+                    val movement =
+                        distance - speed //movement is the new value for distance by adding the speed to the current distance
+                    println("$p2Name moves $speed steps")
+                     return movement //return movement aka new value for distance
+                }
             }
-        }
-    }
+            //if the player chose r then move them right by their speed value
+            else if (direction == 'r') {
 
+                    val movement =
+                        distance + speed //movement is the new value for distance by adding the speed to the current distance
+                    println("$p2Name moves $speed steps")
+                    return movement //return movement aka new value for distance
+                }
+            }
+
+
+    }
     return 0 //never reached
 }
 

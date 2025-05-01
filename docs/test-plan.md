@@ -163,3 +163,15 @@ when the player chooses to attack if the other player is within range then the p
 when the player chooses to heal the correct amount of health will be added to the current player but not exceeding their original max health
 
 when the player chooses to move they will be asked to choose whether to move left or right and the player will then do so but will not pass the other player if they attempt to
+
+
+### Winning
+When a players health goes to 0 or below then the other player will be told they have won and the game will end
+
+I will test this by running through the game attacking until someone wins I will do this twice to test both players 
+
+### Test data
+Run the game till a player wins 
+
+### expected test results
+When a players health goes to 0 or below then the other player will be told they have won and the game will end

@@ -237,10 +237,24 @@ h below max health
 m
 ![playerAction_m.png](screenshots/playerAction/playerAction_m.png)
 #### move
-l at a greater distance from the other player than movement (Boundary test)
+l where the players would move across eachother (Boundary test)
+![move_lWouldOver.png](screenshots/playerAction/move_lWouldOver.png)
+l where the players would not move across eachother
+![move_lNotOver.png](screenshots/playerAction/move_lNotOver.png)
+r where the players would not move across eachother
+![move_rNotOver.png](screenshots/playerAction/move_rNotOver.png)
+r where the players would move across eachother (Boundary test)
+![move_rWouldOver.png](screenshots/playerAction/move_rWouldOver.png)
 
-l at a lesser distance from the other player than movement
-![move_lGreater.png](screenshots/playerAction/move_lLesser.png)
-r at a greater distance from the other player than movement 
-![move_rGreater.png](screenshots/playeraction/move_rGreater)
-r at a lesser distance from the other player than movement (Boundary test)
+## Winning
+
+### Test data 
+run the game till a player wins
+
+#### Test result
+
+player 1 wins
+![winningP1.png](screenshots/winning/winningP1.png)
+
+player 2 wins
+![winningP2.png](screenshots/winning/winningP2.png)
