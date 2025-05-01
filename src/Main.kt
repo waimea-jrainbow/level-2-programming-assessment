@@ -362,9 +362,9 @@ fun move(currentP: Int, distance: Int, p1Name: String, p2Name: String, p1Class: 
                     val movement = 0
                     println("$currentPName cannot move any further that way.")
                     return movement
-                }
-                else {
-                    val movement = distance + speed //movement is the new value for distance by adding the speed to the current distance
+                } else {
+                    val movement =
+                        distance + speed //movement is the new value for distance by adding the speed to the current distance
                     println("$p1Name moves $speed steps")
                     return movement //return movement aka new value for distance
                 }
@@ -374,14 +374,14 @@ fun move(currentP: Int, distance: Int, p1Name: String, p2Name: String, p1Class: 
                 val movement = 0
                 println("$currentPName cannot move any further that way.")
                 return movement
-            }
-            else {
-                val movement = distance + speed //movement is the new value for distance by adding the speed to the current distance
+            } else {
+                val movement =
+                    distance + speed //movement is the new value for distance by adding the speed to the current distance
                 println("$p1Name moves $speed steps")
                 return movement //return movement aka new value for distance
             }
         }
-    }
+
 
         1 -> { //P2 moves
             val speed = p2Class[SPEED] as Int
@@ -390,16 +390,14 @@ fun move(currentP: Int, distance: Int, p1Name: String, p2Name: String, p1Class: 
                 println("$p2Name moves $speed steps")
                 return movement
 
-            }
-            else if (direction == 'r') {
+            } else if (direction == 'r') {
                 val movement = distance + speed
                 println("$p2Name moves $speed steps")
                 return movement
             }
         }
-
-
     }
+
     return 0 //never reached
 }
 
