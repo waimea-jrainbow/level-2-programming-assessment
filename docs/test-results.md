@@ -22,12 +22,15 @@ I will enter valid and invalid inputs into the rules prompt and record the outco
 ![rules-y.png](screenshots/rules/rules-y.png)
 
 ---
+
 ![rules-n.png](screenshots/rules/rules-n.png)
 
 ---
+
 ![rules-lorem.png](screenshots/rules/rules-lorem.png)
 
 ---
+
 As expected on entry of valid inputs correct outcomes are achieved and on invalid inputs the user is prompted to renter another input
 
 ---
@@ -60,6 +63,7 @@ I will enter the following data into the relevant fields:
 #### Test Result
 p1Name is shown as name in the following images 
 userInput is shown as Class in the following images:
+
 ---
 
 Jeve Stobs:  
@@ -77,7 +81,9 @@ Blank:
 As expected on entry of valid inputs correct outcomes are achieved and on invalid inputs the user is prompted to renter another input
 
 ---
+
 ## descClass
+
 The user will be asked whether they wish to read the descriptions of the classes and be poormpted with a y or n answer
 on entry of n the program will move onto the next function ignoring the rest of descClass(). On entry of y the user will
 be shown a list of the classes and be prompted to entry the first letter of the classes name in order to read about it
@@ -113,6 +119,7 @@ word
 
 72  
 ![descClass()_72_userinput_1.png](screenshots/descClass/descClass()_72_userinput_1.png)
+
 ---
 
 c  
@@ -122,49 +129,77 @@ c
 
 blank
 ![descClass()_blank_userinput_1.png](screenshots/descClass/descClass()_blank_userinput_1.png)
--- Originally when a blank input is entered the error string would not be printed and the prompt to enter an input would just be repeated this was fixed by adding an else statement to the getString() function which is used by getChar() which prints the error string 
+
+- Originally when a blank input is entered the error string would not be printed and the prompt to enter an input would just be repeated this was fixed by adding an else statement to the getString() function which is used by getChar() which prints the error string 
+
 ![descClass()_blank_userinput_1_fixed.png](screenshots/descClass/descClass()_blank_userinput_1_fixed.png)
+
 ---
 
 #### userinput 2
 f  
 ![descClass()_f_userinput_2.png](screenshots/descClass/descClass()_f_userinput_2.png)
+
 ---
+
 b
 ![descClass()_b_userinput_2.png](screenshots/descClass/descClass()_b_userinput_2.png)
+
 ---
+
 h
 ![descClass()_h_userinput_2.png](screenshots/descClass/descClass()_h_userinput_2.png)
+
 ---
+
 a
 ![descClass()_a_userinput_2.png](screenshots/descClass/descClass()_a_userinput_2.png)
+
 ---
+
 x
 ![descClass()_x_userinput_2.png](screenshots/descClass/descClass()_x_userinput_2.png)
+
 ---
+
 fighter
 ![descClass()_fighter_userinput_2.png](screenshots/descClass/descClass()_fighter_userinput_2.png)
+
 ---
+
 barbarian
 ![descClass()_barbarian_userinput_2.png](screenshots/descClass/descClass()_barbarian_userinput_2.png)
+
 ---
+
 hoplite
 ![descClass()_hoplite_userinput_2.png](screenshots/descClass/descClass()_hoplite_userinput_2.png)
+
 ---
+
 archer
 ![descClass()_archer_userinput_2.png](screenshots/descClass/descClass()_archer_userinput_2.png)
+
 ---
+
 cheese
 ![descClass()_cheese_userinput_2.png](screenshots/descClass/descClass()_cheese_userinput_2.png)
+
 ---
+
 29
 ![descClass()_29_userinput_2.png](screenshots/descClass/descClass()_29_userinput_2.png)
+
 ---
+
 i
 ![descClass()_i_userinput_2.png](screenshots/descClass/descClass()_i_userinput_2.png)
+
 ---
+
 blank
 ![descClass()_blank_userinput_2.png](screenshots/descClass/descClass()_blank_userinput_2.png)
+
 ---
 
 ## Full Setup
@@ -226,23 +261,33 @@ This should work the same as player 1 setup but addressed to player 2 instead
 #### Test result:
 
 #### playerAction
+
 a out of range
 ![playerAction_aOutOfRange.png](screenshots/playerAction/playerAction_aOutOfRange.png)
+
 a in range
 ![playerAction_aInRange.png](screenshots/playerAction/playerAction_aInRange.png)
+
 h at max health (Boundary test)
 ![playerAction_h_moreThanMax.png](screenshots/playerAction/playerAction_h_moreThanMax.png)
+
 h below max health 
 ![playerAction_h_lessThanMax.png](screenshots/playerAction/playerAction_h_lessThanMax.png)
+
 m
 ![playerAction_m.png](screenshots/playerAction/playerAction_m.png)
+
 #### move
+
 l where the players would move across eachother (Boundary test)
 ![move_lWouldOver.png](screenshots/playerAction/move_lWouldOver.png)
+
 l where the players would not move across eachother
 ![move_lNotOver.png](screenshots/playerAction/move_lNotOver.png)
+
 r where the players would not move across eachother
 ![move_rNotOver.png](screenshots/playerAction/move_rNotOver.png)
+
 r where the players would move across eachother (Boundary test)
 ![move_rWouldOver.png](screenshots/playerAction/move_rWouldOver.png)
 
